@@ -1,0 +1,29 @@
+
+{% extends "admin/change_form.html" %}  
+{% load admin_static %}
+ 
+ {% block stylesheets %}
+    {{ block.super }}
+   <link href="{% static "self/css/style.css" %}" rel="stylesheet" type="text/css" media="screen" />
+ 
+   {% endblock %}
+
+ 
+  {% block footer %}
+  {{ block.super }}
+ 
+ 
+ 
+   <script type="text/javascript" charset="utf-8">
+  (function($){
+	  //$('#id_content').val('')
+	  
+	  $('#id_content').append('{{con}}')
+	  
+	}(django.jQuery));
+  </script>
+  {% endblock %}
+
+
+ 
+ 

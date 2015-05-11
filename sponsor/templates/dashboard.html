@@ -1,0 +1,114 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ env.target }} - 主办方关系发现</title>
+    <style>
+    body {
+        background-color: #b5d4e8;   
+        color: #881919;
+    }
+    .center-480 {
+        display: block;
+        margin: 0px auto;
+        width: 480px;
+    }  
+    .center-960 {
+        display: block;
+        margin: 0px auto;
+        width: 960px;
+    }
+    .center-1024 {
+        display: block;
+        margin: 0px auto;
+        width: 1024px;
+    }
+    .title-36 {
+        font-size: 36px;
+    }
+    .title-28 {
+        font-size: 28px;
+    }
+    .tip {
+        color:#000;   
+    }
+    .hide {
+        display: none;
+    }
+    </style>
+</head>
+<body>
+    <div class="center-1024">
+        <h1 class="center-960">主办方 关系发现 </h1>
+        <hr>
+        <h4>{{ env.target }}</h4>
+        <p class="center-960 hide">{{ env.content }}</p>
+        <div>
+            <p>已关联的活动</p>
+            <table border="1">
+                <tr>
+                    <th>活动名称</th>
+                </tr>
+            {% for event in events %}
+             <tr>
+                    <td width=550>{{ event.name }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+
+            <p>已关联的来源</p>
+            <table border="1">
+                <tr>
+                    <th>来源id</th>
+                    <th>内容</th>
+                    <th>关联的活动</th>
+                </tr>
+            {% for from in froms %}
+             <tr>
+                    <td width=150>{{ from.id }}</td>
+                    <td width=450>{{ from.content }}</td>
+                    <td width=400>
+                        {% for e in from.linked_event %}
+                        {{ e.id }} - {{ e.name }} <br/>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+
+            <hr>
+             <p class="title-28">可能的来源</p>
+             {% if possible_froms %}
+            <table border="1">
+                <tr>
+                    <th>来源id</th>
+                    <th>内容</th>
+                    <th>关联的活动</th>
+                </tr>
+            {% for from in possible_froms %}
+             <tr>
+                    <td width=150><span class="tip">{{ from.id }}</span></td>
+                    <td width=450>{{ from.content }}</td>
+                    <td width=400>
+                        {% for e in from.linked_event %}
+                        <span class="tip">{{ e.id }}</span> - {{ e.name }} <br/>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+            {% else%}
+            <h2>抱歉没有发现任何可能的来源，请人工添加更多的来源！</h2>
+            {% endif %}
+        </div>
+        <hr>
+     <form method="get">
+        {% csrf_token %}
+        <input type="text" name="action" />
+        <input type="submit" value="dig" />
+    </form>
+    <p>version 0.1 2015.02.04 </p>
+    </div>
+   
+    
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>活动详情</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="renderer" content="webkit" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+<style type="text/css">
+  body {
+    font-family:  Tahoma, Arial, Helvetica, 'Microsoft Yahei', 微软雅黑, SimHei;
+    color:#2c3e50;
+    margin:0;
+  }
+  .container {
+    padding:0 8px;
+    margin-top:-10px;
+  }
+  .img-responsive {
+    display: block;
+    max-width:100%;
+    height:auto;
+  }
+  .container>p {
+    line-height: 1.9em;
+    word-break: break-word;
+  }
+  .container img {
+    margin: 1em auto;
+    display: block;
+    max-width: 100%;
+    height: auto!important;
+  }
+    .app-div{
+        text-align: center;
+        margin-top: 2em;
+    }
+  .app-div a{
+      display: inline-block;
+      background-color: #fcc746;
+      width: 80%;
+      height: 2em;
+      text-align: center;
+      line-height: 2em;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 15px;
+  }
+ .container >div,a,p, h1,h2, h3, h4,span,li  { FONT-SIZE: 14px!important; }
+</style>
+</head>
+<body class="dahuodong">
+<div style="display:none">
+
+</div>
+  <div class="container">
+  <p>&nbsp</p>
+  	{% if note %}
+  	{% for n in note %}
+  	{% ifequal forloop.counter '1' %}
+  	<h4>{{n.0|safe}}</h4>
+  	{% endifequal %}
+  	{{n.1|safe}}
+  	{% endfor %}
+    {% endif %}
+
+  </div>
+  <!--  
+      <div class="app-div"><a href='/q-{{event_id}}.html'>购买须知</a></div>
+      -->
+  </body>
+</html>

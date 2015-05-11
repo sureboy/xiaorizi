@@ -1,0 +1,177 @@
+/*Generay styles*/
+
+
+#categoryList {
+	padding: 1em 0 1em .4em;
+	background-color: #F9F9F9;
+	border: 1px solid #eee;
+	font-weight: 400;
+}
+#categoryList>div {
+	padding:.5em 0 .5em 0;
+}
+#categoryList .title {
+	text-align: right;
+}
+
+#categoryList .first {
+	padding-left:5px;
+}
+#categoryList .currentStage a{
+	color:#FF875F;
+}
+
+#categoryList a {
+	color:#444;
+	font-weight:400;
+}
+span.recom {
+	text-align: right;
+}
+
+#download {
+	border:1px solid #ccc;
+	padding:1.5em 0.5em 1.5em 0.5em;
+	text-align: center;
+}
+#download span {
+	display: inline-block;
+	margin-top:1em;
+}
+#download .downLoadSpan {
+	width:45%;
+}
+
+.rightSideBar>div {
+	display: inline-block;
+}
+
+#tabDiv {
+	margin-top:2em;
+	margin-bottom: 4em;
+}
+
+#tabDiv h4 {
+	border-bottom: 2px solid #ccc;
+}
+
+.priceLabel a {
+	color:#000;
+	text-decoration: none;
+}
+.priceLabel:hover {
+	color:#000;
+}
+.priceLabel {
+	display: inline-block;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	padding: .3em 1em .3em 1em;
+	background-image: url(../images/leftCircle.png) no-repeat 0 50%,url(../images/rightCircle.png) no-repeat 0 50%;
+	border-radius: 5px;
+	background-image: url(../images/leftCircle.png),url(../images/rightCircle.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%,100% 50%;
+	margin-top:5px;
+}
+.priceLabel.discount {
+
+}
+span.currentPrice {
+	display: block;
+	position: static;
+	text-align:center;
+}
+.priceLabel span.currentPrice a {
+	color:#FF5601;
+	font-size:18px;
+}
+.priceLabel span.currentPrice a:hover {
+	color:#FF5601;
+}
+.priceLabel.discount span.currentPrice a {
+	color:#fff;
+}
+.priceLabel.discount span.currentPrice a:hover {
+	color:#fff;
+}
+.priceLabel.discount>span {
+	color:#fff;
+	font-size:10px;
+}
+span.sourcePrice,span.save {
+	display: inline-block;
+	padding-left:4px;
+	color:#ccc;
+	font-size:10px;
+}
+.priceLabel.selected {
+	background: #FF5601;
+	background-image: url(../images/rightCircleRed.png) no-repeat 0 50%,url(../images/leftCircleRed.png) no-repeat 100% 50%;
+	background-image: url(../images/rightCircleRed.png),url(../images/leftCircleRed.png);
+	background-position: 0 50%,100% 50%;
+	background-repeat: no-repeat;
+}
+.priceLabel.selected a {
+	color:#fff;
+}
+.priceLabel.selected a:hover {
+	color:#fff;
+}
+#myPriceText {
+	color:#FF5601;
+	padding-left: 25%;
+	font-size: 600;
+}
+
+#chengnuo {
+	text-align:left;
+	padding-left:8em;
+}
+#chengnuo span {
+	display:inline-block;
+	margin-left:1em;
+}
+#chengnuo>div {
+	margin-bottom:1em;
+}
+#chengnuo span.specialColor {
+	margin-left:0;
+}
+#myModal {
+	color:#000;
+}
+
+#myModal h4{
+	color:#000;
+}
+#myModal form {
+	color:#ccc;
+}
+#formTable thead{
+	color:#000;
+	background: #F2F2F2;
+}
+#formTable tbody {
+	background: #FFFBF9;
+	color:#000;
+}
+#formTable tfoot{
+	background: #F4EDE9;
+}
+/*@Group media */
+@media (max-width:991px) {
+	#categoryList .title {
+		text-align: left;
+	}
+	#categoryList .title span {
+		padding-left:5px;
+	}
+}
+
+@media (max-width:767px) {
+	#chengnuo {
+		margin-top:1em;
+		padding-left:0.5em;
+	}
+}

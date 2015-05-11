@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=no" />
+    <meta charset="UTF-8">
+    <title>暂无此活动分类</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/not.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/all.css">
+{% load page_nav_m %}
+{% cityNav %}
+{{city_py}}|{{cat}}
+{% endcityNav %}
+</head>
+<body>
+<div class="container">
+    <!--header start-->
+    <div class="header">
+        <div class="icon-left"><a href="javascript:;" onClick="javascript:history.back(-1);"><i class="iconfont">&#xe66b;</i></a></div>
+        <h2>活动搜索</h2>
+    </div>
+    <div id="cityMap">
+        {% for ci in city_Nav %}
+        <ul>
+            <li style="font-weight: bold;font-size: 1.4em;font-weight: bold">{{ci.district_name}}</li>
+            {% for c in ci.child|slice:":7"%}
+            <li><a href="/{{c.title}}/" style="color:#fff;font-size: 1.1em">{{c.district_name}}</a></li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </div>
+    <div id="catMap">
+        <ul>
+            {% for first in cat_Map %}
+            <ul >
+                {% for second in first.child%}
+                <li {% ifequal second.flag 'true' %}class="selected"{% endifequal %}><span
+                    ></span><a href="{{second.caturl}}"  style="font-size: 1.3em; color: #fff;">{{second.catname}}</a>
+                <ul>
+                    {% for third in second.child%}
+                    <li {% ifequal third.flag 'true' %}class="selected"{% endifequal %} ><a
+                        href="{{third.caturl}}"  style="font-size: 1.1em; color: #fff;">{{third.catname}}</a></li> {% endfor %}
+                </ul>  {% endfor %}
+            </ul>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="opaci1"></div>
+    <div class="opaci2"></div>
+
+    <div content="center">
+       <div class="center-info">
+           <div class="search-div">
+               <form action="/tag/" method="get" class="myForm">
+                   <input type="text" class="search" class="form-control" name="keyword" id="centerSearch" placeholder="搜索活动">
+                   <a  href="javascript:validate()"  style="color: #ddd"><i class="icon iconfont"  style="font-size: 1em;color: grey">&#xe68d;</i></a>
+               </form>
+           </div>
+           <img src="/static/images/iconfont-chahao.png"  class="cry">
+           <p class="sorry">对不起，暂时没有此类活动！或者搜索其他的试试！</p>
+       </div>
+   </div>
+
+    <!------footer start---------->
+    <div class="footer">
+        <div class="div-hr"></div>
+        <ul class="foot-nav-icon">
+            <li class="home"> <a href="/{{city_py}}"><i class="iconfont">&#xe66e;<br/><span>首页</span></i></a></li>
+            <li class="classify"><a href="#"><i class="iconfont">&#xe60d;<br/><span>分类</span></i></a></li>
+            <li class="citymap"><a href="#"><i class="iconfont">&#xe62d;<br/><span>{% if city %}{{city}}{% else %}城市{% endif %}</span></i></a></li>
+            <li class="searchorder"><a href="/searchorder/"><i class="iconfont">&#xe68d;<br/><span>查订单</span></i></a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

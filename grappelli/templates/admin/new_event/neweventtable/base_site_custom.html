@@ -1,0 +1,12 @@
+{% extends "admin/new_event/neweventtable/base_custom.html" %}
+{% load i18n grp_tags %}
+{% load i18n admin_nav_list %}
+
+
+{% block title %}{{ title }} |{% current_time "%Y-%m-%d %I:%M %p" %}  {{ current_time_h }}{% trans 'Django site admin' %}{% endblock %}
+
+{% block content %}
+  {% block mainContent %}
+  {% endblock %}
+{% endblock %}
+

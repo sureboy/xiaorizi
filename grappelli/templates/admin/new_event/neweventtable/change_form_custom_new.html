@@ -1,0 +1,118 @@
+{% extends "admin/new_event/neweventtable/base_site_custom.html" %}
+
+
+<!-- LOADING -->
+{% load url from future %}
+{% load admin_static i18n admin_modify admin_urls grp_tags %}
+{% block extrastyle %}
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="/static/css/default.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/bootstrap-override.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/dropzone.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/tagsinput.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/static/css/sweet-alert.css">
+    <link href="/static/css/newAdmin.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block extrahead %}
+<style>
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-x: auto !important;
+}
+
+body {
+    background-color:#fff;
+}
+</style>
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content %}
+    <form {% if has_file_field %}enctype="multipart/form-data" {% endif %}action="{{ form_url }}" method="post" id="{{ opts.module_name }}_form" role="form" class="form-horizontal mainWrapper clearfix">{% csrf_token %}{% block form_top %}{% endblock %} 
+            {% if to_field %}<input type="hidden" name="{{ to_field_var }}" value="{{ to_field }}" />{% endif %}
+            <input type="hidden" name="_save" id="actionType" value="{% trans 'Save' %}" />
+
+            <!-- Errors -->
+            {% if errors %}
+                <p class="errornote">{% blocktrans count errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}</p>
+                <ul class="errorlist">{% for error in adminform.form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+
+            <!-- Fieldsets -->
+            {% block field_sets %}
+                {% include "admin/new_event/neweventtable/includes/fieldset.html" %}
+            {% endblock %}
+            
+            {% block after_field_sets %}{% endblock %}
+            
+            <!-- Inlines -->
+            {% block inline_field_sets %}
+                {% for inline_admin_formset in inline_admin_formsets %}
+                    {% include inline_admin_formset.opts.template %}
+                {% endfor %}
+            {% endblock %}
+            <!-- Submit-Row -->
+            <!-- {% block submit_buttons_bottom %}{% submit_row %}{% endblock %} -->
+            {% include "admin/new_event/neweventtable/submit_line.html" %}
+           
+    </form>
+   
+   <div class="modal fade" id="seoModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content"><div class="panel panel-dark panel-alt">
+        <div class="panel-heading">
+            <div class="panel-btns">
+                <a class="panel-close" data-dismiss="modal" aria-hidden="true">×</a>
+            </div><!-- panel-btns -->
+            <h3 class="panel-title">新建SEO</h3>
+        </div>
+        <div class="panel-body">
+           <form class="form-horizontal form-bordered" id="seoForm">
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="modal_id_name">名称</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="name" maxLength="50" id="modal_id_name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="modal_id_title">Seo title</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="modal_id_title" name="title" maxlength="200">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="modal_id_keywords">Keywords</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="keywords" id="modal_id_keywords">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="modal_id_description">Description</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="description" maxlength="500" id="modal_id_description">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <a type="button" id="saveSeo" data-action-type="保存" class="btn btn-success btn-block">保存</a>
+                </div>
+            </form>
+        </div>
+    </div></div>
+      </div>
+</div>
+{% endblock %}
+{% block extraScript %}
+<script src="/static/js/dropzone.js"></script>
+<script src="/static/js/moment.js"></script>
+<script src="/static/js/bootstrap-datetimepicker.js"></script>
+<script src="/static/js/ckeditor/ckeditor.js"></script>
+<script src="/static/js/ZeroClipboard.js"></script>
+<script src="/static/js/jquery.tagsinput.js"></script>
+<script src="/static/js/sweet-alert.min.js"></script>
+<script src="/static/js/jquery.form.js"></script>
+<script src="/static/js/formEvent.js"></script>
+<script src="http://pic.huodongjia.com/static/js/WdatePicker.js?t={{time}}.js"></script>
+{% endblock %}

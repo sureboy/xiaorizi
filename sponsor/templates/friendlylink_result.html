@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    成功添加<span style="color:#30931d">{{ success_num }}</span>条友情链接！<br/>
+    有<span style="color:#c62f22">{{ fail_num }}</span>条友情链接已存在<br/>
+    {% if fail %}
+        已经存在的友情链接为<br/><br/>
+        <table>
+                    <tr>
+                        <th>名称</th>
+                        <th>URl</th>
+                    </tr>
+        {% for f in existed_data %}
+            <tr>
+                <td>{{ f.name }}</td>
+                <td>{{ f.url }}</td>
+            </tr>
+        {% endfor %}
+         </table>
+    {% endif %}
+</body>
+</html>

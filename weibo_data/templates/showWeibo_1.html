@@ -1,0 +1,42 @@
+{% block extrastyle %}
+<script src="http://echarts.baidu.com/build/dist/echarts.js "></script>
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/life_weibo.css">
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h2 style="text-align: center">生活家信息可视化</h2>
+        <div class="col-sm-1 little_div">
+            <label class="label_title">活动分类</label><br/>
+            <select class="form-control select_order ">
+                <option value="" selected="selected">全部</option>
+                {% for list in cats %}
+                <option value="{{list.0}}">{{list.1}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-sm-1 little_div">
+            <label class="label_title">活动城市</label><br/>
+            <select class="form-control select_city ">
+                <option value="" selected="selected">全部</option>
+                {% for city in cities %}
+                <option value="{{city.0}}">{{city.1}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-sm-1 little_div">
+            <button type="button" class="btn btn-info search_order">查找</button>
+        </div>
+    </div>
+    <div class="col-sm-6 div_title">
+        <p>活动家分类订单百分比</p>
+    </div>
+    <div class="col-sm-12" id="main" style="height:600px"></div>
+</div>
+{% endblock %}
+{% block extraScript%}
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="/static/js/life_weibo.js"></script>
+{% endblock %}

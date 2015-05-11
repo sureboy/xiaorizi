@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block myStyle %}
+<link rel="stylesheet" href="http://pic1.qkan.com/static/css/show_event.css?t={{time}}.css">
+{% endblock %}
+{% block myContainer %}myContainer{% endblock%}
+{% block search%}
+{% include "searchComponent.html" %}
+{% endblock %}
+{% block content%}
+<!-- 顶部活动主题图片以及活动时间地点名字 -->
+<div style="font-family: 'Arial'">
+<div class="header_top" style="background-image:url('http://pic1.qkan.com/static/images/11-1.jpg');">
+    <div class="head_body">
+        <h1 class="activityName"><span>{{event.event_name}}</span></h1>
+        <p class="h_time"><span>时间：{{event.event_begin_time}}{% ifnotequal event.event_begin_time event.event_end_time%}&nbsp;至&nbsp;{{event.event_end_time}}{%endifnotequal%}</span></p>
+        <p class="city"><span>地点：中国&middot;{{event.district_name}}</span></p>
+    </div>
+</div>
+<!-- 滑动导航栏跟随屏幕移动 -->
+<div class="fixednav">
+    <nav id="navbar-example" class="navbar navbar-default navbar-static" role="navigation">
+        <div class="navbar-collapse container nav_body">
+            <ul class="nav navbar-nav" id="head_nav" role="navigation">
+                <li class="a_notice"><a><img src="http://pic1.qkan.com/static/images/intro.png" height="58" width="58" alt=""><br/>会议介绍</a></li><li
+                    class="a_schedule"><a><img src="http://pic1.qkan.com/static/images/agenda.png" height="58" width="58" alt=""><br/>会议日程</a></li><li
+                    class="a_guest"><a><img src="http://pic1.qkan.com/static/images/guest.png" height="58" width="58" alt=""><br/>会议嘉宾</a></li><li
+                    class="a_ticket"><a><img src="http://pic1.qkan.com/static/images/ticket.png" height="58" width="58" alt=""><br/>会议门票</a></li>
+                </ul>
+        </div>
+    </nav>
+</div>
+<!-- 面包屑导航栏 -->
+
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                {% if navigationList %}
+                {% include "navigationList.html" %}
+                {% endif %}
+            <ul class="ul_right">
+                <li class="ul_right_li_1">官方授权</li>
+                <li class="ul_right_li_2">品质保障</li>
+                <li class="ul_right_li_3">专业服务</li>
+            </ul>
+        </div>
+
+
+
+</div>
+
+{% ifequal event.event_price_model 1 %}
+<div class="col-lg-1 col-md-1 col-xs-1 col-sm-1 enroll">
+    <a href="/showorder/{{event.event_id}}">
+        <img src="http://pic1.qkan.com/static/images/letgo.png">
+    </a>
+</div>
+{% endifequal %}
+{% ifequal event.event_price_model 6 %}
+<div class="col-lg-1 col-md-1 col-xs-1 col-sm-1 enroll">
+    <a href="/showorder/{{event.event_id}}">
+        <img src="http://pic1.qkan.com/static/images/letgo.png">
+    </a>
+</div>
+{% endifequal %}
+<!-- 活动介绍等内容 -->
+<div class="event_info" style="font-family: 'Arial'">
+    <div class="body_class" id="{{forloop.counter}}">
+        <!-- 活动内容标题 -->
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content" >暂无此内容</div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+     <div class="body_class" id="{{forloop.counter}}">
+        <!-- 活动内容标题 -->
+        <div class="class_head">
+        <div class="classs_name">
+                        <h2>会议日程</h2>
+        </div>
+              <div class="head_middle"></div>
+        </div>
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content" style="text-align:left;">
+                <table style="text-align: left;">
+                    <tr>
+                        <td class="richeng">暂无此内容</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+     <div class="body_class" id="{{forloop.counter}}">
+        <!-- 活动内容标题 -->
+        <div class="class_head">
+        <div class="classs_name">
+                        <h2>会议嘉宾</h2>
+        </div>
+              <div class="head_middle"></div>
+        </div>
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">暂无此内容</div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+     <div class="body_class" id="{{forloop.counter}}">
+        <!-- 活动内容标题 -->
+        <div class="class_head">
+        <div class="classs_name">
+                        <h2>会议门票</h2>
+        </div>
+              <div class="head_middle"></div>
+        </div>
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">
+                <table style="text-align: left;">
+                    <tr>
+                        <td class="menpiao">暂无此内容</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+     <div class="body_class" id="{{forloop.counter}}">
+        <!-- 活动内容标题 -->
+        <div class="class_head">
+        <div class="classs_name">
+                        <h2>常见问题</h2>
+        </div>
+              <div class="head_middle"></div>
+        </div>
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">暂无此内容</div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+</div>
+<div class="hidden_div" style="display:none">
+    {% for item in event.event_content %}
+    {% if forloop.first %}
+    <div class="class_name">{{item.0}}</div>
+    <div class="hidden_body">{{item.1|safe}}</div>
+    {% else %}
+    <div class="class_name">{{item.0}}</div>
+    <div class="hidden_body">{{item.1|safe}}</div>
+    {% endif %}
+    {% endfor %}
+</div>
+<div class="zt_footer container">
+    <h4>
+        相关推荐
+    </h4>
+    {% for event in user_viewed_events|slice:"4" %}
+    <a class="tuijian_4" href="/event-{{event.event_id}}.html">
+        <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 recommend">
+            <img src="{{event.event_img}}" alt="{{event.event_name}}"/>
+            <div class="recommend_body col-sm-3 col-md-3 col-lg-3 col-xs-3">
+                <table>
+                    <tr>
+                        <td><p>{{event.event_name}}</p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}
+{% block myscript %}
+<script src="http://pic1.qkan.com/static/js/show_event.js?t={{time}}.css"></script>
+{% endblock %}

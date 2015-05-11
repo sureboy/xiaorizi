@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+     <form method='post'>
+                <table>
+                    <tr>
+                        <th>名称</th>
+                        <th>URl</th>
+                        <th>城市</th>
+                        <th>分类</th>
+                    </tr>
+                    {% for record in data %}
+                        <tr>
+                            <td>{{ record.name }}</td>
+                            <input type="hidden" name="name_{{ record.index }}" value="{{ record.name }}">
+                            <td>{{ record.url }}</td>
+                            <input type="hidden" name="url_{{ record.index }}" value="{{ record.url }}">
+                            <td>
+                                {% if record.city_choose %}
+                                    <select name="city_{{ record.index }}">
+                                    {% for c in record.city %}
+                                        <option value="{{ c.id }}">{{ c.name }}</option>
+                                    {% endfor %}
+                                    </select>
+                                {% else %}
+                                    {% for c in record.city %}
+                                        <input type="hidden" value="{{ c.id }}" name="city_{{ record.index }}"/><label>{{ c.name }}</label>
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if record.cat_choose %}
+                                    <select name="cat_{{ record.index }}">
+                                    {% for c in record.cat %}
+                                        <option value="{{ c.id }}">{{ c.name }}</option>
+                                    {% endfor %}
+                                    </select>
+                                {% else %}
+                                    {% for c in record.cat %}
+                                        <input type="hidden" value="{{ c.id }}" name="cat_{{ record.index }}"/><label>{{ c.name }}</label>
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                </table>
+                <br/>
+
+                <br/><br/>
+                <input type="hidden" value="{{ num }}" name='num' />
+                <input type='submit' value="再次确认"/>
+     </form>
+</body>
+</html>

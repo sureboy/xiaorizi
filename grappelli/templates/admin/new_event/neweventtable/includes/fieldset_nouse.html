@@ -1,0 +1,599 @@
+{% load grp_tags %}
+<div class="row">
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-7">
+        <div class="row">
+          <div class="col-sm-3">
+            <label class="control-label">
+              标题:<a href="http://www.huodongjia.com/event-{{event.old_event_id}}.html?new=1" target="_blank" id="eventId">{{event.old_event_id}}</a>
+              <br/>
+              <input type="text" id="eventStatus" style="display:none;" name="isshow" value="{% if event.isshow_id%}{{event.isshow_id}}{% else %}5{% endif %}">状态:<span id="eventState"></span>
+              <input type="text" id="tujianStatus" style="display:none;" name="order" value="{% if event.order %}{{ event.order}}{% else %}0{% endif %}">
+            </label>
+          </div>
+          <div class="col-sm-9">
+            <input class="form-control" id="id_name" name="name" type="text" value="{{event.name}}">
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-sm-3">
+            <label class="control-label">
+              App标题
+            </label>
+          </div>
+          <div class="col-sm-9">
+ <input class="form-control" id="fname" name="fname" type="text" value="{{event.fname}}">
+          </div>
+          <div class="clearfix"></div>
+           <div class="col-sm-3">
+            <label class="control-label">
+              模板选择
+            </label>
+          </div>
+          <div class="col-sm-9">
+          <div class="col-sm-9">
+<select id="id_form-0-point" name="ename">
+<option value="">---------</option>
+{% for theme in zhuantiList %}
+<option value="{{theme}}" {% ifequal theme  event.ename %} selected="selected" {% endifequal %}>{{theme}}</option>
+{% endfor %}
+</select>          
+           <!--   <input class="form-control" id="ename" name="ename" type="text" value="{{event.ename}}">  --> 
+          </div>
+          </div>
+          <div class="clearfix"></div>
+           <div class="col-sm-3">
+            <label class="control-label">
+              复制图片
+            </label>
+          </div>
+          <div class="col-sm-9">
+              <input class="form-control" id="addImg"  type="text">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner" role="listbox">
+            {% for img in event.img.all %}
+              <div class="item {% if forloop.first%}active{% endif %}">
+                <img src="{{img.server}}{{img.urls}}" data-img-id="{{img.id}}"  server="{{img.server}}" alt="{{img.name}}">
+                <span class="icon-remove removePic"></span>
+                <span>{{img.id}}</span>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="control-label">
+          活动销售
+        </label>
+      </div>
+      <div class="col-sm-10">
+        <div class="row">
+          <div class="col-sm-4 priceModal6" style="display: block;padding-left: 0;">
+             <div class="price-group input-group">
+                <div class="input-group-addon"><label for="pr_str"><a href="http://travel.huodongjia.com/admin/new_event/neweventpriceunit/?q={{event.id}}"  target="_blank"  >价格</a></label></div>
+                <input type="text" name="pr_str" id="pr_str" class="form-control" value="{{event.Price.str}}" style="display: inline-block;margin-bottom: 0!important;">
+              </div>
+          </div>
+          <div class="col-sm-4" style="padding-left: 0;">
+            <select name="pr_Currency" id="s_id_Currency" class="form-control">
+              {% if event.Price.Currency_id %}
+              {% for price in pricecurr.all %}
+                {% ifequal price.id event.Price.Currency_id %}
+                  <option value="{{price.id}}" selected="selected">{{price.name}}</option>
+                {% else %}
+                  <option value="{{price.id}}">{{price.name}}</option>
+                {% endifequal%}
+              {% endfor %}
+              {% else %}
+                {% for price in pricecurr.all %}
+                  {% ifequal forloop.counter 1 %}
+                    <option value="{{price.id}}" selected='selected'>{{price.name}}</option>
+                  {% else %}
+                    <option value="{{price.id}}">{{price.name}}</option>
+                  {% endifequal %}
+                {% endfor %}
+              {% endif %}
+            </select>
+          </div>
+          <div class="col-sm-4">
+            <select name="pr_Type" id="s_id_Type" class="form-control">
+             {% if event.Price.Type_id %}
+             {% for type in pricetype.all %}
+              {%ifequal type.id event.Price.Type_id %}
+                <option value="{{type.id}}" selected="selected">{{type.name}}</option>
+              {% else %}
+                <option value="{{type.id}}">{{type.name}}</option>
+              {% endifequal %}
+             {% endfor %}
+             {% else %}
+             {% for type in pricetype.all %}
+              {% ifequal forloop.counter 6 %}
+                <option value="{{type.id}}" selected="selected">{{type.name}}</option>
+              {% else %}
+                <option value="{{type.id}}">{{type.name}}</option>
+              {% endifequal %}
+             {% endfor %}
+             {% endif %}
+            
+            </select>
+          </div>
+          <div class="col-sm-4 priceModal priceModal3" style="display: block;padding-left: 0;">
+             <div class="price-group input-group">
+                <div class="input-group-addon"><label for="min_pr">筹集价格</label></div>
+                <input type="text"  name="min_pr" id="min_pr" class="form-control" value='{{event.Price.min}}' style="vertical-align: top;display: inline-block;margin-bottom: 0!important;">
+              </div>
+          </div>
+          <div class="col-sm-4 priceModal priceModal3" style="display: block;padding-left: 0;">
+             <div class="price-group group input-group">
+                <div class="input-group-addon"><label for="max_pr">众筹总价</label></div>
+                <input type="text" name="max_pr" id="max_pr" class="form-control" value='{{event.Price.max}}' style="vertical-align: top;display: inline-block;margin-bottom: 0!important;">
+              </div>
+          </div>
+          <div class="col-sm-4 priceModal priceModal1" style="display: block;padding-left: 0;">
+             <div class="price-group input-group">
+                <div class="input-group-addon"><label for="zpr_str">折扣</label></div>
+                <input type="text" name="zpr_str" id="zpr_str" class="form-control" value="{{event.Price.sale}}" style="vertical-align: top;display: inline-block;margin-bottom: 0!important;">
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="control-label">
+          活动时间
+        </label>
+      </div>
+      <div class="col-sm-10">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class='input-group date form_datetime'>
+              <input type='text' id="select_begin_time"  name="begin_time_0" class="form-control" {% ifnotequal event.state 1%} value='{{event.begin_time|date:"Y-m-d H:i:s" }}' {% endifnotequal %} data-date-format="YYYY-MM-DD" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+            <input type="hidden" id="begin_time_1" name="begin_time_1" value="00:00:00"> 
+          </div>
+          <div class="col-sm-6">
+            <div class='input-group date form_datetime'>
+              <input type='text'  id="select_end_time" class="form-control"  name="end_time_0"  {% ifnotequal event.state 1%} value='{{event.end_time|date:"Y-m-d H:i:s" }}' {% endifnotequal %} data-date-format="YYYY-MM-DD" />
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+              </span>
+            </div>
+             <input type="hidden" id="end_time_1" name="end_time_1" value="00:00:00"> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="control-label">
+          城市
+        </label>
+      </div>
+      <div class="col-sm-10">
+        <input type="text" style="display:none;" id="selectedCityId" value="{% for city in event.city.all %}{{city.id}},{% endfor %}">
+        <div class="row">
+          <div class="col-sm-6">
+              <select name='city' id="districtId-edit" class="form-control">
+                  {% for city in cities.all %}
+                  <option value="{{ city.id }}">{{ city.district_name }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label class="control-label">
+          场馆地址
+        </label>
+      </div>
+      <div class="col-sm-10">
+        <div class="row" style="position:relative;">
+          <i class='icon-plus-sign' id="addressOpen"></i>
+          <div class="col-sm-6 search-address">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="icon-search"></i></div>
+              <input type="text" class="form-control" id="search-address">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="icon-edit"></i></div>
+              <input type="text" id="fillVenue" class="form-control" name="addr_fill_name">
+              <input type="text"  id="selectedVenueId" class="form-control" name="addr"  style="display:none;" value="{% for addrs in  event.addr.all %}{{addrs.id}},{% endfor %}">
+            </div>
+          </div>
+          <div class="col-sm-12" id="searcAddressResult">
+             <table class="table table-bordered table-danger" id="address_table">
+              <thead>
+                <th>名称</th>
+                <th>地址</th>
+                <th>城市<i class='icon-minus-sign' style='float:right;cursor:pointer;' id="addressClose"></i></th>
+              </thead>
+              <tbody id="address_table_body">
+              
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-12" id="selectedAddress" style="padding-left: 0;padding-right: 9px;{% if not event.addr %}display:none;{% endif %}">
+              <table class="table table-striped table-bordered address_table table-danger" id="selected_address_table">
+                <thead>
+                  <th>名称</th>
+                  <th>地址</th>
+                  <th>城市</th>
+                </thead>
+                <tbody id="source_address_table_body">
+                  {% if event.addr %}
+                  {% for addrs in  event.addr.all %}
+                  <tr data-addr-id="{{addrs.id}}">
+                    <td><span class="icon-remove deleteAddress" data-addr-id="{{addrs.id}}"></span>{{addrs.title}}</td>
+                    <td>{{addrs.address}}</td>
+                    <td>{{addrs.city.district_name}}</td>
+                  </tr>
+                  {% endfor %}
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+     <div class="row">
+      <div class="col-sm-2">
+        <label class="control-label">
+          信息来源
+        </label>
+      </div>
+      <div class="col-sm-10">
+        <div class="row" id="fromArea">
+          <!-- <div class="col-sm-12" style="padding-left:0;padding-right:10px;">
+            <a style="border-radius:0;" type='btn' class='btn btn-danger btn-block closeTag' id="addFrom">新建信息来源</a>
+          </div> -->
+          <div class="col-sm-4">
+            <select id="id_f_Class" name="f_class" class="form-control">
+              <option value="1">主办方</option>
+              <option value="2">承办方</option>
+              <option value="3">协办方</option>
+              <option value="4">数据来源网站</option>
+            </select>
+          </div>
+          <div class="col-sm-8 type type1">
+            <div class="form-group">
+                    <label for="type_f_Class" class="col-sm-2 control-label">类型</label>
+                    <div class="col-sm-10">
+                      <select id="type_f_Class" name="type" class="form-control">
+                        {% for ft in FromType.all %}
+                          <option value="{{ft.id}}">{{ft.name}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="Website" class="col-sm-2 control-label">url</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="Website" id="Website">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="remark" class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                      <textarea rows="4" class="form-control" name="f_content" id="remark">(主办方@):</textarea>
+                    </div>
+                  </div>
+          </div>
+          <div class="col-sm-8 type type2">
+            <div class="form-group">
+                    <label for="type_f_Class" class="col-sm-2 control-label">类型</label>
+                    <div class="col-sm-10">
+                      <select id="type_f_Class" name="type" class="form-control">
+                        {% for ft in FromType.all %}
+                          <option value="{{ft.id}}">{{ft.name}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="Website" class="col-sm-2 control-label">url</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="Website" id="Website">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="remark" class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                      <textarea rows="4" class="form-control" name="f_content" id="remark">(承办方@):</textarea>
+                    </div>
+                  </div>
+          </div>
+          <div class="col-sm-8 type type3">
+            <div class="form-group">
+                    <label for="type_f_Class" class="col-sm-2 control-label">类型</label>
+                    <div class="col-sm-10">
+                      <select id="type_f_Class" name="type" class="form-control">
+                        {% for ft in FromType.all %}
+                          <option value="{{ft.id}}">{{ft.name}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="Website" class="col-sm-2 control-label">url</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="Website" id="Website">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="remark" class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                      <textarea rows="4" class="form-control" name="f_content" id="remark">(协办方@):</textarea>
+                    </div>
+                  </div>
+          </div>
+          <div class="col-sm-8 type type4">
+            <div class="form-group">
+              <label for="type_f_Class" class="col-sm-2 control-label">类型</label>
+              <div class="col-sm-10">
+                <select id="type_f_Class" name="type" class="form-control">
+                  {% for ft in FromType.all %}
+                    <option value="{{ft.id}}">{{ft.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+                  <div class="form-group">
+                    <label for="Website" class="col-sm-2 control-label">url</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="Website" id="Website">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="remark" class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                      <textarea rows="4" class="form-control" name="f_content" id="remark">(数据来源网站@):</textarea>
+                    </div>
+                  </div>
+          </div>
+          <div class="col-sm-12" id="seletedFrom" style="padding-left:0;padding-right:10px;">
+            <input style="display:none;" id="from_id" name="from_info" {% if event.from_info %} value="{% for fi in event.from_info.all %}{{fi.id}},{% endfor %}" {% else %} value="" {% endif%}>
+            <ul id="fromUl">
+              {% for fi in event.from_info.all %}
+                <li data-id="{{fi.id}}">
+                  <span class="left">
+                    <a href="{%if fi.Website %}{{fi.Website}}{% else %}{% endif%}" target="_blank" style="padding-right:10px;"><i class=" icon-globe"></i></a>
+                    <span>{%if fi.Website %}{{fi.Website}}{% else %}none{% endif%}</span>
+                    <span class="label label-info contactType"{% if fi.type%} data-type-id={{fi.type.id}} {% endif %}>{% if fi.type%}{{fi.type.name}}{% else %}未联系{% endif%}</span>
+                    <span class="label label-info fromType" data-type-id="{{fi.f_Class.id}}">{{fi.f_Class.name}}</span>
+                    <span class="right">
+                      {{fi.content}}
+                    </span>
+                    <i class="icon icon-remove"></i>
+                    <i class="icon icon-edit"></i>
+                    <i class="icon icon-envelope-alt"></i>
+                  </span>
+                </li>
+              {% endfor %}
+            </ul>
+            {% if event.from_info.all %}
+              <div id="editFromArea" class="col-sm-12">
+                 <input type="hidden" class="id">
+                 <div class="form-group">
+                    <label for="type_f_Class" class="col-sm-2 control-label">类型</label>
+                    <div class="col-sm-10">
+                      <select name="type" class="form-control type_f_Class">
+                          <option value="1">未联系</option>
+                          <option value="2">等待回复</option>
+                          <option value="3">合作</option>
+                          <option value="4">合作待定</option>
+                      </select>
+                    </div>
+                  </div>
+                <div class="form-group">
+                    <label for="Website" class="col-sm-2 control-label">url</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control Website">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="remark" class="col-sm-2 control-label">备注</label>
+                    <div class="col-sm-10">
+                      <textarea rows="3" class="form-control remark"></textarea>
+                    </div>
+                  </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-sm-2">
+        <label class="control-label">
+          简介：
+        </label>
+      </div>
+      <div class="col-sm-10">
+        <textarea name="content" class="form-control" rows="3">{{event.content}}</textarea>
+      </div>
+     </div>
+     <div class="row">
+      <div class="col-sm-2">
+        <label class="control-label">
+          活动指数
+        </label>
+      </div>
+	  <div class="col-sm-10">
+	    <div class="row">
+	      <div class="col-sm-6">
+	        <select class="form-control" name="feel">
+	        {{event.event_feelnum.feel.name}}
+	          <option value="" {% if not event.event_feelnum.feel %} selected="selected" {% endif %}>--------</option>
+              {% for  feel in feelType.all %}
+                <option value="{{feel.id}}" {% ifequal event.event_feelnum.feel.name feel.name %} selected="selected" {% endifequal %}>{{feel.name}}</option>
+              {% endfor %}
+            </select>
+	      </div>
+	      <div class="col-sm-6">
+	    	<input type="text" class="form-control" name="feelnum" value="{{event.event_feelnum.feelnum}}">
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  </div>
+  <div class="col-sm-6">
+    <div class="row">
+      <div class="col-sm-10" style="padding-left: 10px;">
+        <ul style="list-style: none;padding-left: 0;">
+        {% if from_url %}<li><a href="{{from_url}}" target='_blank'>来源网址({{from_url}})</a></li>{% endif %}
+        {% if crawl_url %}<li><a href="{{crawl_url}}" target='_blank'>{{crawl_site}}</a></li>{% endif %}
+        {% if crawl_title %}<li>采集名称:{{crawl_title}}</li>{% endif %}
+        {% if crawl_time %}<li>采集时间:{{crawl_time}}</li>{% endif %}
+        {% if pr %}<li>采集价格:{{pr}}</li>{% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <label class="control-label" style="display:none;" id="selectedCatName" data-cat='{% for cat in event.cat.all %}{{cat.name}},{% endfor %}'>分类</label>
+      <div class="col-sm-12" style="padding-left:0;">
+        <div class="row">
+          <div class="col-sm-4">
+            <select multiple="multiple" class="form-control" id="eventCat" name="cat">
+           </select>
+          </div>
+          <div class="col-sm-8 catArea">
+            <div id="childCatArea">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 catArea" style="padding-left:0">
+            <div id="selectedCatArea">
+              <h4>已选标签</h4>
+              <input type="hidden" id="lastEditTag" value=""/>
+              <input type="hidden" name="tag" id="formTags" />
+              <input type="hidden" value="{% for tag in event.tag.all %}{{tag.id}}|{{tag.name}},{% endfor %}" id="selectedTags" />
+              <input class="tagsinput" value="{% for tag in event.tag.all %}{{tag.name}},{% endfor %}" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <input type="text" style="display:none" value="{% for img in event.img.all %}{% if forloop.last %}{{img.id}}{% else %}{{img.id}},{% endif %}{% endfor %}" name="img" id="selectedMainImg">
+      <div class="col-sm-12 dropzone" id="formArea">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-1">
+        <label class="control-label" id="seo">seo</label>
+      </div>
+      <div class="col-sm-11">
+        <div class="row" style="position:relative;">
+          <i class="icon-plus-sign" id="seoOpen"></i>
+          <div class="col-sm-6 search-seo" style="padding-left:0;">
+            <div class="input-group">
+              <div class="input-group-addon"><i class="icon-search"></i></div>
+              <input type="text" class="form-control" id="search-seo">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <a type="btn" id="addSeoBtn" class="btn btn-info btn-block"  style="padding-top: 9px;padding-bottom: 9px;" data-toggle="modal" data-target="#seoModal">{% if event.seo %}修改{% else %}新建{% endif %}SEO</a>
+          </div>
+          <div class="col-sm-12" id="searcSEOResult">
+             <table class="table table-bordered table-danger" id="seo_table">
+              <thead>
+                <th>名称</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Keywords<i class='icon-minus-sign' style='float:right;cursor:pointer;' id="seoClose"></i></th>
+              </thead>
+              <tbody id="search_seo_table_body">
+              </tbody>
+            </table>
+          </div>
+          <div class="col-sm-12" id="selectedSeo" style="padding-left: 0;padding-right: 9px;{% if not event.seo %}display:none;{% endif %}">
+              <input type="text"  id="selectedSeoId" class="form-control" name="seo"  style="display:none;" value="{% if event.seo %}{{event.seo.id}}{% endif %}">
+              <table class="table table-striped table-bordered seo_table table-danger" id="selected_seo_table">
+                <thead>
+                  <th>名称</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Keyword</th>
+                </thead>
+                <tbody id="selected_seo_table_body">
+                  {% if event.seo %}
+                  <tr data-addr-id="{{event.seo.id}}">
+                    <td><span class="icon-remove deleteSeo" data-addr-id="{{event.seo.id}}"></span>{{event.seo.name}}</td>
+                    <td>{{event.seo.title}}</td>
+                    <td>{{event.seo.description}}</td>
+                    <td>{{event.seo.keywords}}</td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-primary panel-alt widget-messaging clearfix">
+        <div class="panel-heading" style="border-radius: 0;float: left;padding: 16px 16px 17px;">
+          <div class="panel-btns">
+                <a href="" id="addnewtodo" class="tooltips" data-toggle="tooltip" title="" data-original-title="Add New"><i class="glyphicon glyphicon-plus"></i></a>
+          </div>
+        </div>
+        <div class="panel-body" style="padding:0;">
+          <ul class="paraUl clearfix">
+            {% for par in paragraph %}
+              <li {% if forloop.first%} class="current"{% endif %}>
+                <div>
+                <span class="id">{{par.id}}</span>----<span class="title">{{par.cat_name.name}}</span>
+                <span class="icon-trash deleteTag"></span>
+                <span class="icon-double-angle-up sortTag"></span>
+                <span class="icon-edit editTag"></span>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12" id='textArea'>
+      {% if paragraph %}
+          {% for par in paragraph %}
+            {% if forloop.first %}
+              <textarea id="editEvent" class="editEvent editEvent_{{par.id}}">
+              {{par.txt}}
+              </textarea>
+            {% endif %}
+          {% endfor %}
+        {% for par in paragraph %}
+          {% if not forloop.first %}
+            <textarea class="editEvent editEvent_{{par.id}}">
+              {{par.txt}}
+            </textarea>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <textarea id="editEvent" class="editEvent_{{par.id}}">
+        <span id="cke_1_path" class="cke_path" role="group" aria-labelledby="cke_1_path_label"><a id="cke_elementspath_85_1" href="javascript:void('body')" tabindex="-1" class="cke_path_item" title="body 元素" hidefocus="true" onkeydown="return CKEDITOR.tools.callFunction(263,1, event );" onclick="CKEDITOR.tools.callFunction(262,1); return false;" role="button" aria-label="body 元素"></a><a id="cke_elementspath_85_0" href="javascript:void('p')" tabindex="-1" class="cke_path_item" title="p 元素" hidefocus="true" onkeydown="return CKEDITOR.tools.callFunction(263,0, event );" onclick="CKEDITOR.tools.callFunction(262,0); return false;" role="button" aria-label="p 元素"></a><span class="cke_path_empty">&nbsp;</span></span>
+        </textarea>
+            {% endif %}
+    </div>
+</div>
+
+<input type="hidden" name="paragraph" id="paragraph" value="" />
+<input type="hidden" name="Relevant" value="" />

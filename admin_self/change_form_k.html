@@ -1,0 +1,473 @@
+{% load admin_static %}{% load url from future %}{% load i18n grp_tags %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+    <!-- STYLESHEETS -->
+    {% block stylesheets %}
+             
+    <link href="{% static "flat_ui/bootstrap/css/bootstrap.css" %}" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{% static "flat_ui/css/flat-ui.css" %}" rel="stylesheet" type="text/css" media="screen" />
+       <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="{% static "flat_ui/js/html5shiv.js" %}"></script>
+      <script src="{% static "flat_ui/js/respond.min.js" %}"></script>
+    <![endif]-->
+   <style>
+      .wrapper {
+        width:100%;
+      }
+      .editForm div.row {
+        margin:1em auto;
+      }
+      .input-group[class*="col-"] {
+        float:left;
+      }
+      .input-group-addon {
+        padding:5px 12px;
+      }
+      .form-control {
+        height: 36px;
+        padding:6px 12px;
+      }
+      .checkbox, .radio {
+        display: inline-block;
+      }
+      .select .btn {
+        width:160px;
+      }
+      .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+        padding-left:5px;
+        padding-right:5px;
+      }
+      .list-inline li {
+        padding-left:0;
+      }
+      .tagList a {
+          padding:7px 7px 5px 0;
+      }
+      .tagList a:hover {
+        color:#fff;
+        background-color:#16a085;
+        border-radius:7px;
+      }
+       #editor {
+        overflow:scroll; 
+        min-height:300px;
+        border:1px solid #34495e;
+      }
+      .btn-toolbar {
+        background-color: #ecf0f1;
+      }
+      .btn-toolbar .btn:hover > i {
+        color:#1abc9c;
+      }
+    </style>
+ 
+    
+    {% endblock %}
+    
+ 
+</head>
+ 
+<body>
+       
+        <div class="container wrapper">
+      <ul class="list-inline" style="padding-left:5px;margin-top:.5em;">
+        <li><a href="#">数据编辑</a>-</li>
+        <li>数据ID:21002 &nbsp;&nbsp;&nbsp;&nbsp;新页面</li>
+      </ul>
+      <form action="#" role="form" class="editForm">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-2">
+                  <label for="event_name">开始时间</label>
+                </div>
+                <div class="input-group date form_datetime col-sm-3" data-link-field="dtp_input1" style="margin-right:1em;">
+                  <input class="form-control" size="16" type="text" value="" readonly>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                </div>
+                <div class="input-group date form_datetime col-sm-3" data-link-field="dtp_input2" style="margin-right:1em;">
+                  <input class="form-control" size="16" type="text" value="" readonly>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+                </div>
+                <div class="col-sm-3">
+                  <label class="checkbox" for="checkbox1">
+                      <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
+                      常年
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                  <label for="event_name">活动名称</label>
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="event_name" name="event_name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                  <label for="event_name">所在城市</label>
+                </div>
+                <div class="col-sm-8">
+                  <div class="form-group">
+                    <label class="sr-only" for="event_name">所在城市</label>
+                    <select>
+                      <option>北京</option>
+                      <option>上海</option>
+                      <option>重庆</option>
+                      <option>天津</option>
+                      <option>四川</option>
+                    </select>
+                    <select multiple="multiple">
+                      <option>成都</option>
+                      <option>绵阳</option>
+                      <option>成都</option>
+                      <option>绵阳</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                  <label for="event_name">场馆/地址:</label>
+                </div>
+                <div class="col-sm-3">
+                  <select>
+                    <option>成都</option>
+                    <option>绵阳</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                  <label for="event_name">票价:</label>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control">
+                  <div class="row">
+                    <label class="checkbox" for="checkbox1">
+                      <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
+                      免费
+                    </label>
+                    <label class="checkbox" for="checkbox1">
+                      <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
+                      出价
+                    </label>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <label for="discount_price">折扣价</label>
+                    </div>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="discount_price" id="discount_price" />
+                    </div>
+                  </div>
+                    <div class="row">
+                    <div class="col-sm-6">
+                      <label for="discount_price">众筹总价</label><input type="text" class="form-control" name="crowding_price" id="crowding_price" />
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="discount_price">众筹单价</label><input type="text" class="form-control" name="crowding_single_price" id="crowding_single_price" />
+                    </div>
+                    </div>
+                  </div>
+                <div class="col-sm-4">
+                  <select>
+                    <option>人民币</option>
+                    <option>美元</option>
+                  </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                  <label for="offcial_site">官网</label>
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" name="offcial_site" id="offcial_site"/ >
+                </div>
+            </div>
+            <div class="row">
+                  <div class="col-sm-2">
+                    <label for="offcial_site">主办方</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="offcial_site" id="offcial_site"/ >
+                  </div>
+            </div>
+            <div class="row">
+                  <div class="col-sm-2">
+                    <label for="offcial_site">承办方</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="offcial_site" id="offcial_site"/ >
+                  </div>
+            </div>
+            <div class="row">
+                  <div class="col-sm-2">
+                    <label for="offcial_site">协助方</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="offcial_site" id="offcial_site"/ >
+                  </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <table class="table">
+              <tr>
+                <td>
+                  采集信息
+                </td>
+                <td>
+                  活动家 http://www.travel.com/
+                  <p>
+                    2-14-07-24 19:39:23 2014么东。。。
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td>活动分类:</td>
+                <td>
+                  <select>
+                    <option>会议</option>
+                    <option>音乐会</option>
+                    <option>话剧</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  分&nbsp;&nbsp;&nbsp;&nbsp;类:
+                </td>
+                <td>
+                  <select multiple="multiple"  class="multipleSelect">
+                    <option data-relation="jixian">极限运动</option>
+                    <option data-relation="yeshenghuo">夜生活</option>
+                    <option data-relation="tiyan">当地体验</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  标&nbsp;&nbsp;&nbsp;&nbsp;签:
+                </td>
+                <td>
+                  <ul class="list-inline tagList" data-target="jixian">
+                    <li><a href="#">会议</a></li>
+                    <li><a href="#">互联网会议</a></li>
+                    <li><a href="#">农业会议</a></li>
+                    <li><a href="#">工业会议</a></li>
+                    <li><a href="#">销售会议</a></li>
+                    <li><a href="#">会议</a></li>
+                    <li><a href="#">会议</a></li>
+                    <li><a href="#">会议</a></li>
+                  </ul>
+                  <ul class="list-inline tagList" data-target="yeshenghuo">
+                    <li><a href="#">夜生活</a></li>
+                    <li><a href="#">夜生活</a></li>
+                    <li><a href="#">夜生活</a></li>
+                    <li><a href="#">夜生活</a></li>
+                    <li><a href="#">夜生活</a></li>
+                    <li><a href="#">夜生活</a></li>
+                    <li><a href="#">夜生活</a></li>
+                    <li><a href="#">夜生活</a></li>
+                  </ul>
+                  <ul class="list-inline tagList" data-target="tiyan">
+                    <li><a href="#">当地体验</a></li>
+                    <li><a href="#">当地体验</a></li>
+                    <li><a href="#">当地体验</a></li>
+                    <li><a href="#">当地体验</a></li>
+                    <li><a href="#">当地体验</a></li>
+                    <li><a href="#">当地体验</a></li>
+                    <li><a href="#">当地体验</a></li>
+                    <li><a href="#">当地体验</a></li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>已选活动标签</td>
+                <td>
+                  <input name="tagsinput" class="tagsinput" value="i,love,dahema" />
+                </td>
+              </tr>
+              <tr>
+                <td>图片展示</td>
+                <td>
+                  <img src="example-image.jpg" class="img-responsive" />
+                </td>
+              </tr>
+              <tr>
+                <td>图片地址</td>
+                <td>
+                  <input type="text" class="form-control" style="width:50%;display:inline-block;" /><input type="text" class="form-control" style="width:20%;display:inline-block;margin:0 1em;" /><a href="#">查看图片</a>
+                </td>
+              </tr>
+              <tr>
+                <td>主办方信息</td>
+                <td>
+                  <textarea class="form-control"></textarea>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <table>
+            <tr>
+              <td>内容简绍</td>
+              <td style="padding-left:4em;">
+                <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+                      <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                          </ul>
+                        </div>
+                      <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                          <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
+                          <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
+                          <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+                          </ul>
+                      </div>
+                      <div class="btn-group">
+                        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
+                        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
+                        <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="icon-strikethrough"></i></a>
+                        <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
+                      </div>
+                      <div class="btn-group">
+                        <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
+                        <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
+                        <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
+                        <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
+                      </div>
+                      <div class="btn-group">
+                        <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
+                        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
+                        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
+                        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
+                      </div>
+                      <div class="btn-group">
+                      <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="icon-link"></i></a>
+                        <div class="dropdown-menu input-append">
+                          <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
+                          <button class="btn" type="button">Add</button>
+                        </div>
+                        <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="icon-cut"></i></a>
+
+                      </div>
+                      
+                      <div class="btn-group">
+                        <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
+                        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+                      </div>
+                      <div class="btn-group">
+                        <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
+                        <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
+                      </div>
+                      <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
+                    </div>
+
+                    <div id="editor">
+                      Go ahead&hellip;
+                    </div>
+                  </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </div>
+       
+       
+    
+     <script src="{% static "flat_ui/js/jquery-1.8.3.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/jquery-ui-1.10.3.custom.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/jquery.ui.touch-punch.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/bootstrap-select.js" %}"></script>
+    <script src="{% static "flat_ui/js/flatui-checkbox.js" %}"></script>
+    <script src="{% static "flat_ui/js/flatui-radio.js" %}"></script>
+    <script src="{% static "flat_ui/js/jquery.tagsinput.js" %}"></script>
+    <script src="{% static "flat_ui/js/typeahead.js" %}" type="text/javascript"></script>
+ 
+ 
+ 
+    <script src="{% static "flat_ui/js/bootstrap-switch.js" %}"></script>
+ 
+    <script src="{% static "flat_ui/js/bootstrap-switch.js" %}js/flatui-radio.js"></script>
+ 
+    <script src="{% static "flat_ui/js/jquery.placeholder.js" %}"></script>
+    <script src="{% static "flat_ui/js/bootstrap-datetimepicker.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/bootstrap-wysiwyg.js" %}"></script>
+    
+  <script>
+     $(function(){
+      $("select").selectpicker({style: 'btn-sm btn-primary', menuStyle: 'dropdown-inverse'});
+      $(".tagsinput").tagsInput();
+      $('.form_datetime').datetimepicker({
+        format: "dd MM yyyy - hh:ii"
+      });
+      $(':checkbox').checkbox();
+      $(".tagList a").on('click',function(){
+        var value = $(this).html();
+        var flag = true;
+        $(".tagsinput span.tag>span").each(function(){
+          if($(this).text() == value) {
+            flag = false;
+          }
+        });
+        if(flag) {
+          $(".tagsinput").addTag(value);
+        }
+      });
+      $("#editor").wysiwyg();
+     $(".multipleSelect").find(">ul>li>a").bind("click",mulitpleClick);
+     $(".multipleSelect").find("li").filter(function(){
+     	return $(this).hasClass("selected");
+     }).find("a").trigger("click",[true]);
+    });
+     function mulitpleClick(event,flag) {
+     	var rel = $(this).parent("li").attr("rel")
+     	var dataTarget=[]; 
+     	var tmp = "";
+     	$(this).parents(".multipleSelect").parent("td").find("select option[selected='selected']").each(function(){
+     		dataTarget[dataTarget.length] = $(this).attr("data-relation");
+     	});
+     	if(!flag) {
+     		if($(this).parent("li").hasClass("selected")) {
+     			tmp = $(this).parents(".multipleSelect").parent("td").find("select option").eq(rel).attr("data-relation");
+     			for(var i=0;i<dataTarget.length;i++) {
+     				if(dataTarget[i] == tmp) {
+     					break;
+     				}
+     			}
+     			dataTarget.splice(i,1);
+     		} else {
+     			dataTarget[dataTarget.length] = $(this).parents(".multipleSelect").parent("td").find("select option").eq(rel).attr("data-relation");
+     		}
+     	}
+    	$(".tagList").hide().filter(function(){
+     		var result = ($.inArray($(this).attr("data-target"),dataTarget) == -1)? false:true;
+     		return result;
+     	}).show();
+     	if(flag) {
+     		return false;
+     	}
+     }
+    </script>
+    
+</body>
+</html>

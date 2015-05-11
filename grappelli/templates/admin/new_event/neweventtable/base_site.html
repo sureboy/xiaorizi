@@ -1,0 +1,41 @@
+{% extends "admin/new_event/neweventtable/base.html" %}
+{% load i18n grp_tags %}
+{% load i18n admin_nav_list %}
+
+
+{% block title %}{{ title }} |{% current_time "%Y-%m-%d %I:%M %p" %}  {{ current_time_h }}{% trans 'Django site admin' %}{% endblock %}
+
+{% block branding %}
+ 
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header }}</a></h1>
+{% endblock %}
+
+{% block nav %} 
+
+
+{% endblock %}
+
+{% block nav-global %}
+{% nav_node %}
+ 
+{% for nav in nav_node_self %}
+<ul id="grp-user-tools">
+<li class="grp-user-options-container grp-collapse grp-closed">        
+{% for k,na in nav.items %}
+<a href="javascript://" class="user-options-handler grp-collapse-handler grp-switch-user-is-original">{{ k }}</a>
+ <ul class="grp-user-options">
+{% for n in na %}
+
+  <li><a href="/admin/{{ n.app_label }}/{{ n.model }}" class="grp-change-{{ n.model }}">{{ n.name }}</a></li>
+                                        
+ {% endfor %}
+  </ul>
+ {% endfor %}
+</li>
+                           
+</ul>
+ 
+{% endfor %}
+ 
+{% endblock %}
+

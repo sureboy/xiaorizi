@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body style=" height: auto;font-family: 'microsoft yahei';">
+    <div class="content" style=" margin-left: 30%;width: 700px;">
+        <p>您已成功订阅{{ cats }}——{{ tags }}</p>
+        {% if ev_list %}
+        <p>以下是活动家为您整理的相关活动推荐:</p>
+        {% for ev in ev_list %}
+        <a href='{{ ev.url }}' style="text-decoration:none;">
+            <div class="info" style=" width: 100%; margin-top: 2em; height: 100px; vertical-align: middle; display: table;"> 
+                <div class="info_img" style="  width: 20%; height: 100px; border: 1px solid #eee; float: left;"> 
+                    <img src="{{ ev.pic }}" style="width: 100%; height: 100px;">
+                </div>
+                <div class="text" style=" width: 65%; height: 100px; border: 1px solid #eee; float: left; margin-top: -102px; margin-left: 25%; display: table-cell;">
+                    <span style=" margin-left: 3%; margin-top: 1em; position: absolute;">{{ ev.name }}</span>
+                    <br>
+                    <span style=" margin-left: 3%; margin-top: 1em; position: absolute;">时间：{{ ev.begin_time }} 至 {{ ev.end_time }}</span>
+                    <br>
+                    <span style=" margin-left: 3%; margin-top: 1em; position: absolute;">地点：{{ ev.address }}</span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        {% endif %}
+        <div class="clear" style=" clear: both;"></div>
+        <!--
+        <p class="xuanze" style="color:#3366cc;">重新订阅请选择：</p>
+        <ul class="slist_class" style=" height: 3em; z-index: 2;">
+            {% for lp in list_page %}
+            <li style="list-style: none; display: inline-block;">
+            <a style=" padding: 1px 8px; width: auto; line-height: 50px; text-decoration: none; color: #8d8d8d; border-radius: 4px;" href="{{ lp.url }}" style="color:#8d8d8d">{{ lp.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <p class="close" style="margin-top: 5em;">如想取消退订请点击<a href="{{ unsubscribe }}">【退订】</a>
+        -->
+        </p>
+        <div class="foot">
+            <p>微信扫一扫，活动君不仅为您准备了国内热门商务会议，还有更多城市周边特色活动体验。</p>
+            <img class="weixin" style="width: 25%; margin-top: 3em;" src="http://pic.huodongjia.com/static/images/huodongjia_erweima.png" alt="活动家微信二维码">
+            <div class="slist_down" style=" height: 200px; border: 1px solid #eee; width: 18%; position: absolute; margin-left: 18%; margin-top: -12em;">
+                <img style="width: 120px; height: 155px; margin-top: 1.6em; margin-left: 0.25em;" src="http://pic.huodongjia.com/static/images/telphone.png" alt="活动家手机APP下载">
+                <p style="margin-left: 138px; margin-top: -135px; font-size: 1.15em;">下载手机APP</p>
+                <div class="slist-tel1" style="margin-left: 133px; margin-top: 10px; background-color: #99CC33   ; width: 110px; height: 35px; text-align: center; line-height: 35px; cursor: pointer;"> 
+                    <a href="https://itunes.apple.com/cn/app/da-huo-dong/id731753448?l=en&amp;mt=8" rel="nofollow" class="btn-red" style="color:#fff; text-decoration: none;">iPhone下载</a>
+                </div>
+                <div class="slist-tel2" style="  margin-left: 133px; margin-top: 15px; background-color: #FF9933   ; width: 110px; height: 35px; line-height: 35px; text-align: center; cursor: pointer;" onclick="window.open('http://app.mi.com/detail/64258')">
+                    <a href="http://app.mi.com/detail/64258" rel="nofollow" class="btn-blue" style="color:#fff; text-decoration: none;">Android下载</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

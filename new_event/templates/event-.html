@@ -1,0 +1,468 @@
+﻿{% extends "base.html" %}
+{% block myContainer %}myContainer{% endblock%}
+{% block search%}
+  {% include "searchComponent.html" %}
+{% endblock %}
+{% block content%}
+  <div class="container mainContent events myContainer">
+      {% if navigationList %}
+      {% include "navigationList.html" %}
+      {% endif %}
+      {% if console_success %} 
+        <div class="alert alert-info alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          谢谢您的留言,我们会尽快回复您。
+        </div>
+      {% endif %}
+      {% if suggestion_success %} 
+        <div class="alert alert-info alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          谢谢您的关心与支持,我们会尽快改正错误，谢谢!。
+        </div>
+      {% endif %}
+      <div class="row" style="padding-bottom:.5em;">
+          {% if event.has_picture %}
+              <div class="col-sm-6 clearfix" style="margin-top:1em;">
+                  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="padding-bottom:0;">
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" style="padding-bottom:0;">
+                      <div class="item active">
+                        <img src="{{event.event_img}}" alt="{{event.event_name}}">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden-xs careUs">
+                    <h4>欢迎关注活动家:</h4>
+                    <div style="float:left;width:50%;">
+                      <p>活动家官方微信:<span style="color:#f26c4f">活动家</span></p>
+                      <p>活动家QQ群:<span style="color:#f26c4f">148283991</span></p>
+                    </div>
+                    <div style="float:right:width:40%">
+                      <p>第一时间 掌握最新活动、优惠活动</p>
+                      <p>随时随地 为您解决订票疑惑</p>
+                    </div>
+                  </div>
+                  <div class="jiathis_style_32x32 clearfix" id="picJiathis" style="margin-top:0;">
+                    <span style="font-size:14px;float:left;line-height:38px;padding-right:5px;">分享到:</span>
+                    <a class="jiathis_button_tsina"></a>
+                    <a class="jiathis_button_tqq"></a>
+                    <a class="jiathis_button_weixin"></a>
+                    <a class="jiathis_button_cqq"></a>
+                  </div>
+              </div>
+              <div class="col-sm-6 hasPic">
+                <h1 class="eventTitle">{{event.event_name}}<a style="padding-left: 11px;cursor: pointer;position: relative;top: 2px;" id="suggestionButton"><i class="iconfont">&#xe63c;</i></a></h1>
+                 {% if event.event_islongtime %}
+                <h5>
+                   时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间:&nbsp;&nbsp;<span class="time">常年
+                  </span>
+                </h5>
+                {% else %}
+                  <h5 id="timeH" data-begin-time="{{event.event_begin_time}}" data-end-time="{{event.event_end_time}}">
+                   时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间:&nbsp;&nbsp;<span class="time">{{event.event_begin_time}}{% ifnotequal event.event_begin_time event.event_end_time%}&nbsp;至&nbsp;{{event.event_end_time}}{%endifnotequal%}
+                  </span>
+                  </h5>
+                {% endif %}
+                <h5>
+                  地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:&nbsp;&nbsp;<a href="/{{event.district_title}}/"  class="cityLink" rel="nofollow">{{event.district_name}}</a>
+                  {% if event.event_venue %},{{event.event_venue}} {% endif %}{% if event.event_address %},{{event.event_address}} {% endif %}
+                </h5>
+                 <h5>币&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;种:&nbsp;&nbsp;{{event.event_price_unit}}({{event.event_price_unit_name}})</h5>
+                  {% ifnotequal event.event_tag ''%}
+                   <h5 name="{{event.event_tag}}" class="eventTags">
+                      活动标签:&nbsp;{% for tag in event.event_tag %} <a href="/tag/?keyword={{tag}}" class="glyphiconWord">{{tag}}</a>{% if not forloop.last%},{% endif %}{% endfor %}
+                    </h5>
+                  {% endifnotequal %}
+                 {% ifequal event.event_price_model 3%}
+                  <div class="progress crowdingDiv" style="width:20em;margin-bottom: 0px;">
+                    <div class="crowdingInnerDiv progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                      <span class="sr-only"></span>
+                    </div>
+                  </div>
+                  <div style="width:20em;" class="clearfix crowdingDesc">
+                  <div style="float:left;">
+                    <h5 id="beginPrice">￥{{cf.cf_already}}</h5>
+                    <h5>已筹集</h5>
+                  </div>
+                  <div id="timeLeft" class="crowdingDesc"></div>
+                  <div style="float:right;" class="crowdingDesc">
+                    <h5 id="endPrice">￥{{cf.cf_total}}</h5>
+                    <h5>筹资目标</h5>
+                  </div>
+                  </div>
+                {% endifequal %}
+                <div class="spotTip" style="margin-left:0;overflow:hidden;line-height:25px;" data-tip="{{event.event_price_model}}">
+                  亲，为了能及时出票，请提前预定购买哦
+                </div>
+                <form role="form" rel="nofollow" id="priceForm" action="/showorder/{{event.event_id}}/" method="get" {% ifequal event.event_price_model 3%} style="margin-top:0;" {% endifequal%}>
+                  {% csrf_token %}
+                  <input type="text" id="cheapMoney" name="cheapMoney" value="0" style="display:none;">
+                  {% ifnotequal event.event_price_model 2 %}
+                    <input type="text" id="myPrice" name="price" value="0" style="display:none;">
+                  {% endifnotequal %}
+                  <div class="clearfix divMargin">
+                    <h4 class="selectPriceTitle" style="margin-top:26px;">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格:&nbsp;&nbsp;</h4>
+                    <div style="float:left;width:70%;">
+                      {% if cf %}
+                      <ul id="priceList" data-soure-price="{{cf.cf_price}}" class="float:right;">
+                      </ul>
+                      {% else %}
+                      <ul id="priceList" data-has-discount="{{event.event_discount}}" data-discount="{{event.event_discount}}"  data-discount-price="{{event.event_discount_price}}" data-soure-price="{{event.event_price}}" class="float:right;">
+                      </ul> 
+                      {% endif %}
+                    </div>
+                  </div>
+                  {% ifequal event.event_price_model 2 %}
+                    <div class="clearfix divMargin">
+                      <div class="form-group" style="margin-bottom:0;">
+                        <label for="myPrice" style="font-weight:500;">我要出价:</label>
+                        <input type="text" class="hiddenByTime" name="price" id="myPrice" value=""><span class="myPriceTip">出价越高,获取的票面价值越大</span>
+                      </div>
+                     <div style="float:left;">距&nbsp;&nbsp;结&nbsp;&nbsp;束:</div><div id="endTime" data-time="{{event.event_end_time}}"></div>
+                    </div>
+                  {% else %}
+                  {% endifequal %}
+
+                     <div class="clearfix selectNum" style="overflow:hidden;">
+                      <h4 class="selectPriceTitle" style="padding-top:0;">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量:&nbsp;&nbsp;</h4>
+                      <div style="float:left;width:70%;margni-top:.4em;margin-left:.3em;">
+                        <span class="clickNum" id="minus" style="background-image:url('http://pic.huodongjia.com/static/images/minus.png');"></span><input id="ticketNum"  name="number" type="text" value="1"><span  class="clickNum" id="plus" style="background-image:url('http://pic.huodongjia.com/static/images/plus.png');"></span>
+                      </div>
+                    </div>
+                  <div style="margin-top:2em;"> 
+                   	{% ifequal event.time_expire 2 %}
+  									<a type="btn" class="btn btn-lg hiddenByTime submitBtn">已过期</a>
+  									{% else %}
+ 								
+                     <button type="submit" class="btn btn-lg hiddenByTime submitBtn">{% ifequal event.event_price_model 3%} 我要支持{% else%}{% ifequal event.event_price_model 2 %}我要出价{% else %} 立即购买{% endifequal %}{% endifequal %}</button>
+                     {% endifequal %}
+                    <a type="btn" class="btn btn-lg question"  id="guestMessageButton">留言咨询</a>
+                  </div>
+                </form>
+              </div>
+            {% else %}
+              <div class="col-sm-8 clearfix" style="border-right:1px solid #dbdada;">
+                <h1 class="eventTitle">{{event.event_name}}<a style="padding-left: 11px;cursor: pointer;position: relative;top: 2px;" id="suggestionButton"><i class="iconfont">&#xe63c;</i></a></h1>
+                {% if event.event_islongtime %}
+                <h5>
+                   时&nbsp;&nbsp;&nbsp;&nbsp;间:&nbsp;&nbsp;<span class="time">常年
+                  </span>
+                </h5>
+                {% else %}
+                  <h5 id="timeH" data-begin-time="{{event.event_begin_time}}" data-end-time="{{event.event_end_time}}">
+                   时&nbsp;&nbsp;&nbsp;&nbsp;间:&nbsp;&nbsp;<span class="time">{{event.event_begin_time}}{% ifnotequal event.event_begin_time event.event_end_time%}&nbsp;至&nbsp;{{event.event_end_time}}{%endifnotequal%}
+                  </span>
+                  </h5>
+                {% endif %}
+                 <h5>
+                  地&nbsp;&nbsp;&nbsp;&nbsp;址:&nbsp;&nbsp;<a href="/{{event.district_title}}/"  class="cityLink" target="_blank" rel="nofollow">{{event.district_name}}</a>
+                  {% if event.event_venue %},{{event.event_venue}} {% endif %}{% if event.event_address %},{{event.event_address}} {% endif %}
+                </h5>
+                 <h5>币&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;种:&nbsp;&nbsp;{{event.event_price_unit}}({{event.event_price_unit_name}})</h5>
+                 {% ifnotequal event.event_tag ''%}
+                   <h5 name="{{event.event_tag}}" class="eventTags">
+                      活动标签:&nbsp;{% for tag in event.event_tag %} <a href="/tag/?keyword={{tag}}" class="glyphiconWord">{{tag}}</a>{% if not forloop.last%},{% endif %}{% endfor %}
+                    </h5>
+                  {% endifnotequal %}
+               {% ifequal event.event_price_model 3%}
+                  <div class="progress crowdingDiv" style="width:20em; margin-bottom: 0px;">
+                    <div class="crowdingInnerDiv progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                      <span class="sr-only"></span>
+                    </div>
+                  </div>
+                  <div style="width:20em;" class="clearfix">
+                  <div style="float:left;">
+                    <h5 id="beginPrice">￥{{cf.cf_already}}</h5>
+                    <h5>已筹集</h5>
+                  </div>
+                  <div id="timeLeft"></div>
+                  <div style="float:right;">
+                    <h5 id="endPrice">￥{{cf.cf_total}}</h5>
+                    <h5>筹资目标</h5>
+                  </div>
+                  </div>
+                {% endifequal %}
+                <div class="spotTip spotTip2" style="margin-left:0;overflow:hidden;line-height:30px;" data-tip="{{event.event_price_model}}">
+                 亲，为了能及时出票，请提前预定购买哦
+                </div>
+                <form role="form" id="priceForm" action="/showorder/{{event.event_id}}//" method="get"{% ifequal event.event_price_model 3%}style="margin-top:0;"{%endifequal%}>
+                  {% csrf_token %}
+                  <input type="text" id="cheapMoney" name="cheapMoney" value="0" style="display:none;">
+                  {% ifnotequal event.event_price_model 2 %}
+                  <input type="text" id="myPrice" name="price" value="0" style="display:none;">
+                  {% endifnotequal %}
+                  <div class="clearfix divMargin">
+                    <h5 class="selectPriceTitle" style="margin-top:26px;">选择价格:</h5>
+                    <div style="float:left;width:70%;">
+                  {% if cf %}
+                      <ul id="priceList" data-soure-price="{{cf.cf_price}}" class="float:right;">
+                      </ul>
+                      {% else %}
+                      <ul id="priceList" data-has-discount="{{event.event_discount}}" data-discount="{{event.event_discount}}"  data-discount-price="{{event.event_discount_price}}" data-soure-price="{{event.event_price}}" class="float:right;">
+                      </ul> 
+                      {% endif %}
+                    </div>
+                  </div>
+                  {% ifequal event.event_price_model 2 %}
+                    <div class="clearfix">
+                      <div class="form-group" style="margin-bottom:0;">
+                        <label for="myPrice" style="font-weight:500;">我要出价:</label>
+                        <input type="text" class="hiddenByTime" name="price" id="myPrice" value=""><span class="priceTip">出价越高,获取的票面价值越大</span>
+                      </div>
+                      <div style="float:left;">距&nbsp;&nbsp;结&nbsp;&nbsp;束:</div><div id="endTime" data-time="{{event.event_end_time}}"></div>
+                    </div>
+                   {% else %}
+                  {% endifequal %}
+                  <div class="clearfix divMargin" style="overflow:hidden;">
+                      <h4 class="selectPriceTitle" style="padding-top:0;">数&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量:&nbsp;&nbsp;</h4>
+                      <div style="float:left;width:70%;margni-top:.4em;margin-left:.3em;">
+                        <span class="clickNum" id="minus" style="background-image:url('http://pic.huodongjia.com/static/images/minus.png');"></span><input id="ticketNum"  name="number" type="text" value="1"><span  class="clickNum" id="plus" style="background-image:url('http://pic.huodongjia.com/static/images/plus.png');"></span>
+                      </div>
+                    </div>
+                    <div style="margin-top:2em;">
+                     	{% ifequal event.time_expire 2%}
+                     <a type="btn" class="btn btn-lg hiddenByTime submitBtn">已过期</a> 
+                      {% else %}
+                    <button type="submit" class="btn btn-lg hiddenByTime submitBtn">
+                      {% ifequal event.event_price_model 3%}我要支持{% else%}{% ifequal event.event_price_model 2 %}我要出价{% else %} 立即购买{% endifequal %}{% endifequal %}
+                    </button>
+                     {% endifequal %}
+                    <a type="btn" class="btn btn-lg question" id="guestMessageButton">留言咨询</a>
+                  </div>
+                </form>
+                <div class="jiathis_style_32x32 clearfix" id="notPicJiathis" style="margin-top:20px;">
+                    <span style="font-size:14px;float:left;line-height:38px;padding-right:5px;">分享到:</span>
+                    <a class="jiathis_button_tsina"></a>
+                    <a class="jiathis_button_tqq"></a>
+                    <a class="jiathis_button_weixin"></a>
+                    <a class="jiathis_button_cqq"></a>
+                  </div>
+                  </div>
+              <div class="col-sm-4 hidden-xs">
+                <div class="weixin">
+                  <img src="http://pic1.qkan.com/static/images/huodongjia_erweima.jpg" style="display:block;margin:0 auto;" alt="活动家微信二维码">
+                  <p>
+                   扫一扫微信关注我们
+                  </p>
+                  <p>
+                    微信服务号:<span style="color:#ec7063">活动家</span>
+                  </p>
+                  <p>
+                   活动家QQ群：<span style="color:#ec7063">148283991</span>
+                  </p>
+                  <p>
+                    第一时间 掌握最新活动、优惠活动
+                  </p>
+                  <p>随时随地 为您解决订票疑惑
+                  </p>
+                </div>
+                <a href="/app/" target="_blank"><img src="http://pic.huodongjia.com/static/images/appDownLoad3.jpg" class="img-responsive" alt="活动家app下载"/></a>
+              </div>
+          {% endif %}
+      </div>
+      <div class="row tipRow hidden-xs">
+        <div class="col-sm-4" style="border:none;">
+            <img src="http://pic.huodongjia.com/static/images/2hours.png" alt="2hour"/>
+            <div class="tipInnerDiv">
+                <p>2小时回复</p>
+                <p style="margin-bottom:0;">您所购买的商品我们会在2小时内回复您!</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <img src="http://pic.huodongjia.com/static/images/100.png" alt="100"/>
+            <div class="tipInnerDiv">
+                <p>100%出票</p>
+                <p style="margin-bottom:0;">您所购买的商品我们100%出票</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <img src="http://pic.huodongjia.com/static/images/ourPhone.png" alt="phone"/>
+            <div class="tipInnerDiv">
+                <p>客服热线</p>
+                <p style="margin-bottom:0;">有疑问，请拨打<a class="telphoneA" style="color:#ec7063;font-weight:bold;" >400-003-3879</a></p>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div id="tabDiv">
+           <ul class="nav nav-tabs clearfix">
+              {% for item in event.event_content %}
+                {% if forloop.first %}
+                  <li class="active first"><h2 href="#{{forloop.counter}}" data-toggle="tab">{{item.0}}</h2></li>
+                {% else %}
+                  <li><h2 href="#{{forloop.counter}}" data-toggle="tab">{{item.0}}</h2></li>
+                {% endif %}
+              {% endfor %}
+           </ul>
+           <div class="tab-content">
+            {% for item in event.event_content %}
+            {% if forloop.first %}
+              <div class="tab-pane active" id="{{forloop.counter}}"><div class="blank_block"></div><div class="tabItem" style="color:#2c3e50;">{{item.1|safe}}</div>
+              </div>
+            {% else %}
+              <div class="tab-pane" id="{{forloop.counter}}"><div class="blank_block"></div><div class="tabItem" style="color:#2c3e50;">{{item.1|safe}}</div>
+              </div>
+            {% endif %}
+            {% endfor %}
+           </div>
+           </div>
+        </div>
+        <div class="col-sm-4" style="margin-top:1em;">
+              {% if event.has_picture %}
+                <div class="tuijianList" style="padding-left:.5em;padding-right:.7em;">
+              {% else %}
+                <div class="tuijianList">
+              {% endif %}
+              {% if event.has_picture %}
+                <h4 style="text-align:center;color:#2c3e50;margin-top:0; border-bottom: 1px solid #dbdada ;padding-bottom:12px;text-align:left;margin-bottom: 0;" id="test">精彩推荐<span id="textMark"></span></h4>
+                {% if user_viewed_events %}
+                        {% for event in user_viewed_events %}
+
+                              <figure class="picWrapper" style="margin-bottom:0;">
+                                 <img src="{{event.event_img}}" class="img-responsive" alt="{{event.event_name}}">
+                               <a href="/event-{{event.event_id}}.html" class="picLink {% ifequal event.event_price_model 3%}crowdfundingPic{% endifequal %} 
+                                  {% ifequal event.event_price_model 1%} discountPic {% endifequal %}" target="_blank"></a>
+                                  {% ifequal event.event_price_model 1%}
+                                  <div class="discountNum" data-discount="{{event.event_discount}}">9.0折</div>
+                                  {% endifequal %}
+                              </figure>
+                              <p class="tuijianp clearfix">
+                                <a href="/event-{{event.event_id}}.html">{{event.event_name}}</a>
+                                {% if event.event_discount_price %}
+                                <span class="picPrice" data-priceStyle="{{event.event_price_unit}}" style="display:inline-block;float:left;margin-top:.3em;">{{event.event_discount_price}}</span>
+                                {% else %}
+                                  <span class="picPrice" data-priceStyle="{{event.event_price_unit}}" style="display:inline-block;float:left;margin-top:.3em;">{{event.event_price}}</span>
+                                {% endif %}
+                              </p>
+                        {% endfor %}
+                    {% endif %}
+                    <a href="/app/" target="_blank" class="hidden-xs"><img src="http://pic.huodongjia.com/static/images/appDownLoad3.jpg" class="img-responsive" alt="app下载"/></a>
+                {% else %}
+                {% if user_viewed_events %}
+                      <h4 style="text-align:center;color:#2c3e50;margin-top:0; border-bottom: 1px solid #dbdada ;#2c3e50;padding-bottom:12px;text-align:left;margin-bottom: 0;">精彩推荐
+          <span id="textMark"></span></h4>
+                        <ul>
+                          {% for event in user_viewed_events %}
+                            <li class="clearfix">
+                              <span class="tagNum">Top{{forloop.counter}}</span><a href="/event-{{event.event_id}}.html" target="_blank">{{event.event_name}}</a>
+                              {% if event.event_discount_price %}
+                                <span class="picPrice" data-priceStyle="{{event.event_price_unit}}" style="display:block;margin-left:2.8em;">{{event.event_discount_price}}</span>
+                              {% else %}
+                                <span class="picPrice" data-priceStyle="{{event.event_price_unit}}" style="display:block;margin-left:2.8em;">{{event.event_price}}</span>
+                              {% endif %}
+                            </li>
+                          {% endfor %}
+                        </ul>
+                {% endif %}
+              {% endif %}
+                </div>
+            </div>
+          <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+          </div>
+  </div>
+  <div class="modal-body">
+    <div id="contactModal">
+      <p style="padding-left:3px;">请仔细填写以下内容，我们会及时与您联系，谢谢!</p>
+      <form class="row questionForm clearfix" role="form" action="" method="post" style="margin-top:2em;">
+            {% csrf_token %}
+            <input type="text" style="display:none;" name="msg_type" value="consult">
+            <div class="form-group clearfix">
+              <div class="col-sm-3">
+                <label for="name" class="control-label"><span class="mustFill">*</span>您的姓名&nbsp;:</label>
+              </div>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" btvd-type="required" btvd-err="必须填写姓名" name="name">
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-sm-3">
+                <label for="phone" class="control-label"><span class="mustFill">*</span>手机号码&nbsp;:</label>
+              </div>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" btvd-type="required" btvd-el="/^1[3-8]+\d{9}$/" btvd-err="请填写正确的手机号码" name="phone">
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-sm-3">
+                <label for="email" class="control-label"><span class="mustFill">*</span>电子邮件&nbsp;:</label>
+              </div>
+              <div class="col-sm-8">
+                <input type="email" class="form-control" name="email" btvd-type="required mail"  btvd-err="邮箱格式不正确!">
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <div class="col-sm-3">
+                <label for="content" class="control-label">咨询内容&nbsp;:</label>
+              </div>
+              <div class="col-sm-8">
+                <textarea class="form-control" name="content" btvd-el="!/(h|H)(r|R)(e|E)(f|F)(\s)*=(\s)*('|&quot;)?[A-zA-Z0-9#]+(.)+[A-zA-Z0-9#]+('|&quot;)?/" btvd-err="亲，咨询内容不允许有链接"></textarea>
+              </div>
+            </div> 
+             <div class="form-group clearfix" style="z-index:5;">
+             <div class="col-sm-3">
+             <label for="address" class="control-label"><span class="mustFill">*</span>验证码</label>
+             </div>
+             <div class="col-sm-8">
+              <input type="text" id="captcha" class="form-control" name="captcha" btvd-type="required" btvd-err="必须填写验证码@">
+              <img onclick="this.setAttribute('src','/get_check_code_image/?nocache='+Math.random());" src="/get_check_code_image/" alt="CheckCode"/> 
+             </div>
+          </div>
+            <div class="form-group clearfix">
+              <div class="col-sm-12" id="mymodalBtn">
+                <button class="btn btn-lg" type="submit"  style="padding-left:3em;padding-right:3em;">确定</button>
+              </div>
+            </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div id="suggestionModal">
+      <p style="padding-left:3px;">请仔细填写以下内容，我们会及时调查改正，谢谢您的支持!</p>
+      <form class="form-horizontal suggestionForm" role="form" action="" method="post" style="margin-top:2em;">
+            {% csrf_token %}
+             <input type="text" style="display:none;" name="msg_type" value="suggestion">
+            <div class="form-group clearfix">
+              <label for="phone" class="col-sm-3 control-label"><span class="mustFill">*</span>手机号码&nbsp;:</label>
+              <div class="col-sm-8 clearfix">
+                <input type="text" class="form-control" btvd-type="required" btvd-el="/^(1[3-8]+\d{9})?$/" btvd-err="请填写正确的手机号码" name="phone">
+              </div>
+            </div>
+             <div class="form-group clearfix">
+              <label for="where" class="col-sm-3 control-label">纠错内容&nbsp;:</label>
+              <div class="col-sm-8">
+                <select class="form-control" name="where">
+                  <option value="标题">标题</option>
+                  <option value="活动地址">活动地址</option>
+                  <option value="价格">价格</option>
+                  <option value="活动介绍">活动介绍</option>
+                  <option value="活动图片">活动图片</option>
+                  <option value="其它">其它</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group clearfix">
+              <label for="content" class="col-sm-3 control-label"><span class="mustFill">*</span>错误详情&nbsp;:</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" btvd-type="required" name="suggestion" btvd-el="!/(h|H)(r|R)(e|E)(f|F)(\s)*=(\s)*('|&quot;)?[A-zA-Z0-9#]+(.)+[A-zA-Z0-9#]+('|&quot;)?/" btvd-err="亲，咨询内容不允许有链接"></textarea>
+              </div>
+            </div> 
+             <div class="form-group clearfix" style="z-index:5;">
+            <label for="address" class="col-sm-3 control-label"><span class="mustFill">*</span>验证码</label>
+            <div class="col-sm-8" style="position:relative;">
+              <input type="text" id="captcha" class="form-control" name="captcha" btvd-type="required" btvd-err="必须填写验证码@">
+              <img onclick="this.setAttribute('src','/get_check_code_image/?nocache='+Math.random());" src="/get_check_code_image/" alt="CheckCode"/> 
+            </div>
+          </div>
+            <div class="form-group clearfix">
+              <div class="col-sm-12" id="suggestionBtn" style="text-align:center;">
+                <button class="btn btn-lg" type="submit"  style="padding-left:3em;padding-right:3em;">确定</button>
+              </div>
+            </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 agenda" id="agenda">
+            <span class="agenda_title">商务活动&sdot;{{ year }}年{{ month }}月会议日程安排</span><span class="month">{{ year }}年{{ month }}月</span>
+            <div class="agenda-hr"></div>
+            <table class="agenda_table" cellpadding="1" cellspacing="1">
+                <thead>
+                <tr class="table-tr">
+                    <th></th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in calendar_table %}
+                <tr class="table-tr">
+                    <td></td>
+                    {% for item in row %}
+                    <td>
+                        {{ item.day }}
+                        {% if item.n_event %}
+                        <div class="blue-div">{{ item.n_event }}场活动</div>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                    <td></td>
+                </tr>
+                <tr class="table-tr table-td">
+                    <td class="first-td"><div class="table_div"></div></td>
+                    {% for item in row %}
+                    <td>
+                        <div class="table_div">
+                            {% if item.event %}
+                            <ul>
+                            {% for ev in item.event %}
+                            <li><a href="{{ ev.url }}">{{ ev.name }}</a></li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </td>
+                    {% endfor %}
+                    <td class="last-td"><div class="table_div"></div></td>
+                </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        </div>
+    </body>
+</html>

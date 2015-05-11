@@ -1,0 +1,552 @@
+/*@group General styles 
+---------------------------------------------------------*/
+body {
+	font-family: "微软雅黑";
+}
+
+.mybtn {
+	background:#FF5601;
+	border-radius:0;
+	border:0;
+	color:#fff;
+}
+.mybtn:hover {
+	background: #FF5601;
+	color:#fff;
+}
+.color_1 {
+	background: #00D7DA;
+}
+.color_2 {
+	background: #FF8547;
+}
+.color_3 {
+	background: #24AEFE;
+}
+.section.color_4 {
+	background: #F9F9F9;
+}
+.dahuodong .navbar {
+	border-radius: 0;
+	margin-bottom: 0;
+	font-weight: bold;
+}
+.dahuodong .navbar .navbar-header a {
+	padding-bottom:1px;
+}
+
+/*body*/
+.jumbotron {
+	background:url('../images/header.jpeg');
+	min-height:400px;
+	margin-bottom: 0;
+	padding-top:100px;
+	color:#fff;
+}
+.form-inline .inline-input {
+	width:85%;
+}
+.moreRecom {
+	display: none;
+}
+.inner_wrapper {
+	border:1px solid #eee;
+	padding-left: 5px;
+	padding-right: 5px;
+	background: #fff;
+}
+
+.inner_wrapper h4 {
+	text-align: center;
+	font-weight: 600;
+}
+.inner_wrapper .service {
+	padding:15px 5px 5px 5px;
+	font-size: 12px;
+	min-height: 128px;
+	position:relative;
+}
+.inner_wrapper .color_1,.inner_wrapper .color_2,.inner_wrapper .color_3 {
+	color:#fff;
+}
+
+.inner_wrapper .color_11 {
+	color:#00D7DA;
+}
+.inner_wrapper .color_22 {
+	color:#FF8547;
+}
+.inner_wrapper .color_33 {
+	color:#24AEFE;
+}
+
+.inner_wrapper>div.row {
+	margin-top:1em;
+}
+.outer_wrapper {
+	margin-top:4em;padding-bottom:4em;
+}
+#picArea {
+	width:70%;
+	float:left;
+	padding-top:1em;
+	background:#fff;
+	margin-left:5%;
+}
+#app_downLoad {
+	width:12%;
+	float:left;
+	margin-left:2%;
+}
+#app_downLoad a {
+	display:block;
+	margin-top:2em;
+}
+/*@Group compoment styles
+-------------------------------------------------------------------*/
+#categoryList  dd:hover{
+        background-color: #eee;
+      }
+      #categoryList  dd a:hover{
+        text-decoration: none;
+      }
+      .currentStatus {
+        background-color: #eee;
+      }
+.discountPic {
+            position: absolute;
+            background: url('../images/discount.gif');
+            background-repeat: no-repeat;
+            width:46px;
+            height:36px;
+            top: 5px;
+            right: 10px;
+          }
+ .dhd_pagination {
+   padding:0;
+   margin:2em auto;
+   list-style: none;
+ }
+.dhd_pagination li {
+   display: inline-block;
+   margin-left:.7em;
+}
+.dhd_pagination a {
+   display: block;
+   text-decoration: none;
+   font-size: 1.5em;
+   padding-left:1em;
+        padding-right:1em;
+        color:#000;
+        background: #FAFAFA;
+        line-height: 2em;
+      }
+      .dahuodong a.currentPage {
+        background: #FF5601;
+      }
+
+.price {
+	position: absolute;
+	right:4px;
+	font-weight:600;
+}
+.currentPrice {
+	color: #FF4703;
+	margin-top:-0.3em;
+	display: inline-block;
+	position: relative;
+	top:-0.6em;
+}
+.color_1 .currentPrice,.color_2 .currentPrice,.color_3 .currentPrice {
+	color: #fff;
+}
+.sourcePrice {
+	text-decoration: line-through;
+	display: inline-block;
+}
+/*自定义5格栅格类*/
+.col-sm-2dot4 {
+	position: relative;
+	min-height: 1px;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+/*固定页脚布局*/
+.mainWrapper{
+	min-height: 100%;
+	height: auto;
+	padding-bottom:234px;
+}
+
+.footer {
+	width:100%;
+	padding-top:2em;
+}
+.footer footer {
+	text-align: center;
+}
+.footer {
+	background: #f5f5f5;
+	color:#000;
+}
+.footer strong {
+	font-size:1.5em;
+	font-weight: 500;
+}
+.footer .first_dt {
+	margin-top:1em;
+}
+
+
+/*@Group login.html css styles
+--------------------------------------------------------------------*/
+#loginForm {
+	border:1px solid #ccc;
+	padding:.8em
+}
+
+#loginForm h3 {
+	color:#FF6922;
+	font-weight: 600;
+}
+
+/*@Group form.html css styles
+---------------------------------------------------------------------*/
+#msgForm ul {
+	margin-bottom:2em;
+}
+
+#msgForm h4.underline {
+	font-weight: 600;
+	border-bottom: 1px solid #ccc;
+	color: #ccc;
+	padding-bottom: 0.5em;
+}
+#msgForm label {
+	font-weight: 400;
+}
+.specialColor {
+	color:#FF5601;
+}
+.mustFill {
+	color:#FF875F;
+}
+#totalNum {
+	padding-right:2em;
+}
+#totalMoney {
+	padding-right:2em;
+	font-size: 1.5em;
+	font-weight: 600;
+	color: #FF5601;
+}
+#formTable thead  {
+	background-color: #eee;
+}
+#formTable .title {
+	color:#FF875F;
+}
+#formTable .time {
+	color:#ccc;
+	display: block;
+}
+
+
+/*@Group from_alreadyLogin.html
+--------------------------------------------------------------------*/
+#postMsg {
+	color:#ccc;
+	margin-top:2em;
+}
+#postMsg span {
+	display: block;
+}
+
+#msgForm h4.underline {
+	font-weight: 600;
+	border-bottom: 1px solid #ccc;
+	color: #000;
+	padding-bottom: 0.5em;
+}
+#remark {
+	padding: 1em 0 0 0.5em;
+	background-color: #FFee99;
+	border:1px solid #FF9966;
+	min-height: 5em;
+}
+
+/*@Group list1.html styles
+--------------------------------------------------------------------*/
+.placeholder_img {
+	position: absolute;
+	top:0;
+	left:0;
+	min-height:400px;
+	z-index:1;
+	width:100%;
+	opacity: 0.4;
+}
+#itemMsg {
+	border:1px solid #eee;
+	padding-left: .7em;
+	font-size: 1em;
+}
+#itemMsg1>span {
+	display: block;
+}
+.shareLinks {
+	text-align: left;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+.priceList {
+	padding-left:1em;
+	color:#ccc;
+	font-size:1.3em;
+	margin-bottom:1em;
+}
+#buy_Tickets h4{
+	color:#FF8547;
+}
+
+#buy_Tickets .row {
+	margin-top:1em;
+	margin-bottom: 1em;
+	margin-right:0.2em;
+	color: #ccc;
+}
+#buy_Tickets .first {
+	text-align: right;
+}
+#myPrice {
+	padding-left: 1em;
+	font-size: 1.3em;
+	margin-top:1em;
+	margin-bottom:1em;
+}
+
+/*public styles*/
+.main {
+	background: rgba(204,204,204,0.2);
+	padding-top:1px;
+}
+.main h5 {
+	margin-top:0;
+	font-size:16px;
+}
+.mainContent  {
+	margin-top:2em;
+}
+.picWrapper {
+	margin:1em auto;
+	text-align: left;
+	position: relative;
+}
+.picInnerWrapper {
+	position: relative;
+	width:100%;
+}
+.grayArea {
+	background: rgba(51,51,51,0.6);
+	color: #fff;
+	padding: 1em 0.6em 1.5em 1em;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	font-size: 1em;
+	width:100%;
+}
+.shuoming {
+	color: #000;
+	text-indent: 1.5em;
+}
+.shuoming p {
+	color: #999;
+	font-size: 12px;
+}
+
+body.dahuodong .navbar-inverse .navbar-nav > li > a{
+	color: #FF7722;
+	font-size: 16px;
+	font-weight: 400;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	border-right: 1px solid #FF5601;
+}
+body.dahuodong .navbar-inverse .navbar-nav > li.last > a {
+	border-right:0;
+}
+body.dahuodong .navbar-inverse .navbar-nav > li > a:hover {
+	color:#FF7700;
+}
+
+
+/*
+aboutUs.html
+*/
+
+#aboutUs h3 {
+	color:#000;
+}
+#aboutUs ul {
+	list-style: none;
+	padding-left:0;
+}
+#aboutUs ul>li {
+	padding:.5em;
+	color:#ccc;
+}
+#aboutUs ul>li>a {
+	display: inline-block;
+	color:#ccc;
+	text-align: left
+}
+#aboutUs ul>li>a:hover{
+	color:#ccc;
+	text-decoration: none;
+}
+.activeItem {
+	background-color: #eee;
+}
+#aboutUsTab {
+	margin-top:20px;
+}
+#aboutUsTab>div {
+	font-size:16px;
+	padding-left:7px;
+}
+/*end--------*/
+
+
+/*header*/
+ nav#head{
+   background-image: url('images/head_word.png');
+   background-repeat: no-repeat;
+   background-position: 100px 50%;
+}
+/*@Group media query 
+--------------------------------------------------------------------*/
+@media (max-width: 233px) {
+	.dahuodong .navbar-header img {
+		width:62px;
+		height:20px;
+	}
+}
+
+@media (max-width:767px) {
+	.myHidden {
+		display: none;
+	}
+	.dhd_pagination a {
+          font-size:.8em;
+          line-height: 1.2em;
+          padding-left:.5em;
+          padding-right: .5em;
+        }
+	 nav#head {
+      background-image:none;
+   	}
+	#buy_Tickets .first {
+      text-align: left;
+	  margin-bottom: 1em;
+	}
+	.footer {
+      font-size:0.8em;
+    }
+    .footer strong {
+      font-size:1em;
+      font-weight: 400;
+    }
+    .jumbotron h1  {
+    	font-size:1.5em;
+    }
+
+	.inner_wrapper div.row>div {
+		margin-bottom:1em;
+	}
+	body.dahuodong .navbar-inverse .navbar-nav > li > a{ 
+		border-right: 0px !important;
+	}
+	/**/
+	.form-inline .inline-input {
+		width:100%;
+	}
+	.form-inline .inline-submit {
+		text-align: center;
+	}
+
+	/*display more recommed*/
+	.moreRecom {
+		display: block;
+	}
+
+	#picArea {
+		width:100%;
+		margin-left:0;
+	}
+}
+
+@media (min-width:768px) and (max-width:1050px) {
+	.container {
+		width:100%;
+	}
+	.mainContent h5 {
+		font-size:14px;
+	}
+	.outer_wrapper {
+		font-size:.8em;
+	}
+}
+
+@media (min-width: 768px) {
+	.modal-dialog {
+		width: 900px;
+		margin: 30px auto;
+	}
+}
+
+@media (max-width:992px) {
+	.jumbotron {
+      padding-top:0;
+      min-height: 1px;
+      font-size:12px;
+    }
+
+	.gray {
+		background:#eee;
+	}
+	.outer_wrapper {
+		margin-top:2em;
+		padding-bottom:2em;
+	}
+}
+@media (min-width:1100px) {
+	.col-lg-2dot4 {
+		float: left;
+	}
+	.col-lg-2dot4 {
+		width: 20%;
+	}
+	.col-lg-pull-2dot4 {
+		right: 20%;
+	}
+	.col-lg-push-2dot4 {
+		left: 20%;
+	}
+	.col-lg-offset-2dot4 {
+		margin-left: 20%;
+	}
+}
+@media (min-width:1100px) {
+	.container {
+		width:85%;
+	}
+	.Myhidden-lg {
+		display: none;
+	}
+}
+
+

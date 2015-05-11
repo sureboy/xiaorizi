@@ -1,0 +1,206 @@
+{% load admin_static %}{% load url from future %}{% load i18n grp_tags %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+    <!-- STYLESHEETS -->
+    {% block stylesheets %}
+             
+    <link href="{% static "flat_ui/bootstrap/css/bootstrap.css" %}" rel="stylesheet" type="text/css" media="screen" />
+        <link href="{% static "flat_ui/css/flat-ui.css" %}" rel="stylesheet" type="text/css" media="screen" />
+       <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="{% static "flat_ui/js/html5shiv.js" %}"></script>
+      <script src="{% static "flat_ui/js/respond.min.js" %}"></script>
+    <![endif]-->
+    <style>
+    body{
+      font-family:Tahoma, Arial, Helvetica,"Microsoft Yahei", "微软雅黑", SimHei;
+    }
+      .open > .dropdown-menu {
+        margin-top:6px !important;
+      }
+      .navbar {
+        border-radius: 0;
+        margin-bottom:0;
+      }
+      .wrapper {
+        width:100%;
+      }
+      .left {
+        padding-right:0;
+        height:50em;
+        background-color: #34495e;
+      }
+      .left ul {
+        padding-left:0;
+        padding-right:7px;
+        list-style: none;
+      }
+      .left ul li:hover {
+        background-color: #1abc9c;
+      }
+      .left ul a {
+        font-size:14px;
+        color:#fff;
+        padding-left:7px;
+      }
+      .right{
+        padding-left: 0;
+      }
+      .tabDiv .nav > li > a {
+        border-radius:0;
+        padding:5px 20px;
+      }
+      .tabDiv .nav {
+        margin-left:2em;
+        margin-top:1em;
+      }
+      .tab-content {
+        padding:1em;
+      }
+      .removeTab {
+        position: absolute;
+        top:0;
+        right:0;
+        padding:4px;
+        font-size:12px;
+        z-index: 100;
+      }
+      .rightListFrame li a {
+        position: relative;
+      }
+      .hide {
+        display: none;
+      }
+      .btn.dropdown-toggle {
+        padding:6px 12px;
+      }
+    </style>
+ 
+    
+    {% endblock %}
+    
+    <!-- EXTRASTYLES -->
+    {% block extrastyle %}{% endblock %}
+    <!-- JAVASCRIPTS -->
+    {% block javascripts %} 
+        
+        
+    {% endblock %}
+    <!-- EXTRAHEAD -->
+    {% block extrahead %}{% endblock %}
+</head>
+ 
+<body>
+   <nav class="navbar navbar-inverse navbar-embossed" id="mainNav" role="navigation">
+     <div class="navbar-header">
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+         <span class="sr-only">Toggle navigation</span>
+       </button>
+       <a class="navbar-brand" href="#">活动家</a>
+     </div>
+     <div class="container">
+      
+     <div class="collapse navbar-collapse" id="navbar-collapse-01">
+       <ul class="nav navbar-nav">
+       
+         {% for app in app_list %}
+ 
+         <li class="dropdown ">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans app.name %} <span class="caret"></span></a>
+          {% if app.models %}
+          <ul class="dropdown-menu" role="menu">
+          {% for model in app.models %}
+          {% if model.admin_url %}
+          <li><a href="#" data-src="{{ model.admin_url }}" data-name="model-{{ model.object_name|lower }}">{{ model.name }}</a></li>
+          {% endif %}
+           
+           {% endfor %}
+          
+       
+          </ul>
+          {% endif %}
+        </li>
+   
+   
+   
+    {% endfor %}
+     
+       </ul> 
+     </div><!-- /.navbar-collapse -->
+     </div>
+   </nav><!-- /navbar -->
+   <div class="container wrapper">
+     <div class="row">
+        <div class="col-sm-1 left">
+        </div>
+        <div class="col-sm-11 right">
+          <div class="tabDiv">
+            <ul class="nav nav-tabs rightListFrame" role="tablist" style="margin-left:15px;">
+            </ul>
+            <div class="tab-content">
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+    
+     <script src="{% static "flat_ui/js/jquery-1.8.3.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/jquery-ui-1.10.3.custom.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/jquery.ui.touch-punch.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "flat_ui/js/bootstrap-select.js" %}"></script>
+    <script src="{% static "flat_ui/js/flatui-checkbox.js" %}"></script>
+    <script src="{% static "flat_ui/js/flatui-radio.js" %}"></script>
+    <script src="{% static "flat_ui/js/jquery.tagsinput.js" %}"></script>
+    <script src="{% static "flat_ui/js/typeahead.js" %}" type="text/javascript"></script>
+    
+  <script>
+      $(function(){
+        if($("#mainNav").length>0) {
+          $("#mainNav").find(".dropdown>a").click(function(){
+            $(".left *").remove();
+            var cloneList = $(this).siblings("ul").find("li").clone();
+            cloneList.appendTo($("<ul></ul>").appendTo($(".left"))).find("a").bind('click',function(){
+              var tmp = $(this);
+              addRemoveTab(tmp);
+              return false;
+            });;
+          });
+          $("#mainNav").find(".dropdown>ul a").click(function(){
+            var tmp = $(this);
+            addRemoveTab(tmp);
+            return false;
+          });
+
+          function addRemoveTab(tmp){
+            var isAgain = false;
+            $("ul.rightListFrame li a").each(function(){
+              if(tmp.attr("data-name") === $(this).attr("href").substring(1)) {
+                isAgain = true;
+              }
+            });
+            if(tmp.attr("data-src") && tmp.attr("data-src") != "" && !isAgain ) {
+                $(".right ul.rightListFrame li").removeClass("active");
+                $(".right .tab-pane").removeClass("active");
+                $("<li></li>").addClass("active").append($("<a></a>").text(tmp.html()).attr("href","#"+tmp.attr("data-name")).attr("data-toggle","tab").append($("<span class='glyphicon glyphicon-remove removeTab'></span>").bind('click',tabClick))).appendTo($(".right").find("ul.rightListFrame"));
+                $("<div></div>").addClass("tab-pane").addClass("active").attr("id",tmp.attr("data-name")).append($("<iframe></iframe>").css({"width":"100%","height":"45em"}).attr("src",tmp.attr("data-src"))).appendTo($(".right").find(".tab-content"));
+            }
+          }
+          function tabClick() {
+            var href = $(this).parent("a").attr("href");
+            $(this).parents("li").remove();
+            $(href).remove();
+            return  false;
+          }
+        }
+      });
+    </script>
+    
+</body>
+</html>

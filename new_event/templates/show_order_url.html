@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>订单来路分析</title>
+   
+</head>
+<body>
+<div>
+<h1> {{ip}}</h1>
+<h1>订单号 {{order}}</h1>
+<ul>
+  {% for t in  url_list %}
+  	<li>
+  	<a href="{{t.0}}" target="_blank"  >{{t.0}}</a>{{t.1}}{{t.2}}
+  	</li>
+  {% endfor %}
+  </ul>
+ </div>
+</body>
+</html>

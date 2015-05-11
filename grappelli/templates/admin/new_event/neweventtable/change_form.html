@@ -1,0 +1,99 @@
+{% extends "admin/change_form.html" %}  
+{% load admin_static %}
+ 
+ {% block stylesheets %}
+    {{ block.super }}
+   <link href="{% static "self/css/style.css" %}" rel="stylesheet" type="text/css" media="screen" />
+ 
+   {% endblock %}
+
+ 
+  {% block footer %}
+  {{ block.super }} 
+ 
+  <script type="text/javascript" src="{% static "self/js/ckeditor/ckeditor.js" %}"></script> 
+   <script type="text/javascript" src="{% static "self/js/tag_user.js" %}"></script> 
+ 
+  <script type="text/javascript" charset="utf-8">
+  (function($){
+	  
+	  isshow=$('.isshow').html()
+	  $('footer ul').append('<li id="isshow">'+isshow+'</li>')
+	  $('.isshow').html('')
+	  
+	  pr_type($("#s_id_Type").val())
+		$("#s_id_Type").live('mouseup',function(){ 
+			 pr_type($("#s_id_Type option:selected").val())
+		})
+	  
+	    $('#id_content').append('{{con}}')
+	    
+	    pr='{{pr}}'
+		if (pr){
+		 	pr='<p><label><strong>原始价格:</strong></label></p><p><label style="">'+pr+'</label></p>'	  
+		    $(".Price").children('.l-d-4').children('.c-1').append( pr)
+		}
+	  
+		e_id='{{event_id}}'
+		if (e_id   ){
+			e_id=' <a target="_blank" href="http://www.huodongjia.com/event-'+e_id+'.html">页面查看</a> '
+			$(".name").children('.l-d-4').children('.c-1').append( e_id)
+			$('footer ul').append('<li id="page">'+e_id+'</li>')
+		}
+		
+		
+		
+		$("#con_neweventparagraph").attr('data_event_id','{{event.id}}')
+		crawl_site='{{crawl_site}}'
+		crawl_url='{{crawl_url}}'
+		crawl_title='{{crawl_title}}'
+		crawl_time='{{crawl_time}}'
+			addr='{{addr}}'
+			if (addr){
+				$('label[for="id_addr"]').append( '<p style="color:green">{{addr}}</p>')		
+		
+			}
+			
+
+			
+			c_s='<div id="from" >'
+			
+		f_id='{{from_url}}'
+ 
+		if 	(f_id|f_id!='None' )c_s+='<p>官网查看：<a target="_blank" href="'+f_id+'">'+f_id+'</a></p> '	
+		if 	(crawl_site|crawl_site!='None' )c_s+='<p>来源网站：<a target="_blank" href="'+crawl_site+'">'+crawl_site+'</a></p> '
+		 
+		
+		if 	(crawl_url|crawl_url!='None' )c_s+='<p>采集网址：<a target="_blank" href="'+crawl_url+'" >'+crawl_url+'</a></p> '
+		if 	(crawl_title|crawl_title!='None' )c_s+='<p>采集名称：'+crawl_title+'</p> '
+		if 	(crawl_time|crawl_time!='None' )c_s+='<p>采集时间：'+crawl_time+'</p> '
+		
+		
+		
+		c_s+='</div>'			 
+		$(".from_info").children('.l-d-4').children('.c-1').append( c_s)
+		//$('label[for="id_tag"]').html( tag_arr.join('')+help)
+		tags='<label for="new_tag">'
+		{% for ta in tag %}
+		tags+= '<a href="javascript:tag_select({{ta.id}})" id="tag_{{ta.id}}"  >{{ta.name}}</a>' 
+		{% endfor %}
+		tags+='</label><p>&nbsp;</p><p><<<strong>点击分类获取更多标签</strong>>></p>'
+		$(".tag").children('.l-d-4').children('.c-1').append($(tags))
+		
+ 
+		
+		  
+ 
+		  //imgss='w:'+$("#pre").width()+','+'h:'+$("#pre").height()
+		  //$(".img").children('.l-d-4').children('.c-1').append( imgss)
+		//$("#con_neweventimg").html(imgss)
+		  
+		
+		 
+	}(django.jQuery));
+  </script>
+  {% endblock %}
+
+
+ 
+ 

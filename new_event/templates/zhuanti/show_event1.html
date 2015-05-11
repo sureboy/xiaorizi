@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block myStyle %}
+<link rel="stylesheet" href="http://pic1.qkan.com/static/css/show_event.css?t={{time}}.css">
+{% endblock %}
+{% block myContainer %}myContainer{% endblock%}
+{% block search%}
+  {% include "searchComponent.html" %}
+{% endblock %}
+{% block content%}
+<div class="header_top hidden-sm hidden-xs" style="height:450px;">
+    <!-- <img src="http://pic1.qkan.com/static/images/11-1.jpg" alt="{{event.event_name}}"> -->
+    <div class="head_body">
+    <h1 class="activityName"><span>{{event.event_name}}</span></h1>
+    <p class="city"><span>中国&middot;<a href="/{{event.district_title}}/">{{event.district_name}}</a></span></p>
+    <p class="h_time"><span>瑞士大酒店  {{event.event_begin_time}}{% ifnotequal event.event_begin_time event.event_end_time%}&nbsp;至&nbsp;{{event.event_end_time}}{%endifnotequal%}</span></p>
+    </div>
+</div>
+<div class="fixednav">
+<nav id="navbar-example" class="navbar navbar-default navbar-static" role="navigation">
+    <div class="navbar-collapse border_bot">
+        <ul class="nav navbar-nav container" id="head_nav" role="navigation">
+            <li class="active col-lg-2"><a class="btns">会议通知</a></li>
+            <li class="col-lg-2 col-md-2 col-xs-2 col-sm-2"><a class="btns">会议日程</a></li>
+            <li class="col-lg-2 col-md-2 col-xs-2 col-sm-2"><a class="btns">会议嘉宾</a></li>
+            <li class="col-lg-2 col-md-2 col-xs-2 col-sm-2"><a class="btns">会议门票</a></li>
+            <li class="col-lg-2 col-md-2 col-xs-2 col-sm-2"><a class="btns">常见问题</a></li>
+            <li class="col-lg-2 col-md-2 col-xs-2 col-sm-2"><a class="btns green_btn">报名参加</a></li>
+        </ul>
+    </div>
+</nav>
+</div>
+<div class="background_blue">
+    <div class="container" style="padding: 0px;">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <div class="ul_left_body col-lg-7 col-md-7 col-xs-7 col-sm-7">
+            {% if navigationList %}
+                    {% include "navigationList.html" %}
+            {% endif %}
+            </div>
+            <ul class="ul_right">
+                <li class="ul_right_li_1">官方授权</li>
+                <li class="ul_right_li_2">品质保障</li>
+                <li class="ul_right_li_3">专业服务</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container bg_fff" style="line-height: 2em;">
+  <div class="body_class" >
+     
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">
+               暂无此内容
+            </div>
+           <div style="clear: both;"></div>
+    </div>
+    <div class="body_class">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">
+            <table style="text-align: left;">
+                <tr>
+                    <td class="richeng"> 暂无此内容</td>
+                </tr>
+            </table>
+            </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="body_class">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">
+               暂无此内容
+            </div>
+<div style="clear: both;"></div>
+    </div>
+    <div class="body_class">
+
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">
+                <table style="text-align: left;">
+                <tr>
+                    <td class="menpiao"> 暂无此内容</td>
+                </tr>
+            </table>
+            </div>
+      <div style="clear: both;"></div>
+    </div>
+    <div class="body_class body_class_end">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">
+                暂无此内容
+            </div>
+        <div style="clear: both;"></div>
+    </div>
+</div>
+<div class="hidden_div" style="display:none">
+    {% for item in event.event_content %}
+            {% if forloop.first %}
+            <div class="class_name">{{item.0}}</div>
+<div>{{item.1|safe}}</div>
+             {% else %}
+            <div class="class_name">{{item.0}}</div>
+<div>{{item.1|safe}}</div>
+              {% endif %}
+            {% endfor %}
+</div>
+<div class="body_class" style="border-bottom:none;padding-bottom:50px;">
+    <div class="container bg_fff" style="padding-bottom: 70px;">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <div class="recommend recommend_head"><h2>精彩推荐</h2></div>
+             {% for event in user_viewed_events|slice:"4" %}
+            <a class="tuijian_4" href="/event-{{event.event_id}}.html">
+            <div class="recommend recommend_body">
+                <h4>{{event.event_name}}</h4>
+
+                <p><i class="glyphicon glyphicon-map-marker"></i>{{event.district_name}}<span><i class="glyphicon glyphicon-calendar"></i>{{event.event_begin_time}}{% ifnotequal event.event_begin_time event.event_end_time%}至{{event.event_end_time}}{%endifnotequal%}</span></p>
+            </div>
+            </a>
+             {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block myscript %}
+<script src="http://pic1.qkan.com/static/js/show_event.js?t={{time}}.css"></script>
+{% endblock %}

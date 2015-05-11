@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+{% load page_nav %}
+{% cityNav %}
+{{city_py}}|{{cat}}
+{% endcityNav %}
+{% block head %}
+{% autoescape off %}
+<title>{{head.title}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="renderer" content="webkit" />
+<meta name="description" content="{{head.description}}" />
+<meta name="keywords" content="{{head.keywords}}" />
+{% endautoescape %}
+{% endblock %} 
+<style type="text/css">
+  body {
+    font-family:  Tahoma, Arial, Helvetica, 'Microsoft Yahei', 微软雅黑, SimHei;
+    color:#2c3e50;
+    margin:0;
+  }
+  .container {
+    padding:0 8px;
+    margin-top:-10px;
+  }
+  .img-responsive {
+    display: block;
+    max-width:100%;
+    height:auto;
+  }
+  .container>p {
+    line-height: 1.9em;
+    word-break: break-word;
+  }
+  .container img {
+    margin: 1em auto;
+    display: block;
+    max-width: 100%;
+    height: auto!important;
+  }
+</style>
+</head>
+<body class="dahuodong">
+<div style="display:none">
+
+</div>
+  <div class="container">
+    {% for item in event.event_content %}
+      {% if forloop.first %}
+        {{item.1|safe}}
+      {% endif %}
+      {% if  %}
+    {% endfor %}
+    
+    
+  </div>
+  </body>
+</html>

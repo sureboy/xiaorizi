@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+<link rel="stylesheet" type='text/css' href='http://pic1.qkan.com/static/css/sponsor.css'>
+</head>
+<div class="container">
+    {% if sponsor %}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 spon_header">
+            <ul class="col-lg-12 col-md-12 col-xs-12 col-sm-12 ul_left">
+                <li ><a href="/" >首页</a>&gt;</li>
+                <li><a>主办方</a>&gt;</li>
+                <li><h1>{{ sponsor.name }}</h1></li>
+            </ul>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12  spon_info">
+                    <img src="{{ sponsor.pic_url }}"   class="spon_info_img" alt="{{ sponsor.name }}">
+                    {% autoescape off %}
+                    {{ sponsor.intro }}
+                    {% endautoescape %}
+            </div>
+                <ul class="col-lg-12 col-md-12 col-xs-12 col-sm-12 ul_bt">
+                    <li class="ul_bt_1"><img
+                    src="http://pic1.qkan.com/static/images/like.png"><span id="like">{{ sponsor.like_count }}</span>人喜欢</li>
+                    <li class="ul_bt_2"><img
+                    src="http://pic1.qkan.com/static/images/activity.png"><span>{{ sponsor.event_count}}</span>场活动</li>
+                    {% if sponsor.is_verify %}<li class="ul_bt_3"><img src="http://pic1.qkan.com/static/images/v.png"><span>已认证</span></li>
+                    {% else %}<li class="ul_bt_4"><img src="http://pic1.qkan.com/static/images/v.png"><span>未认证</span><span class="come">我要认领</span></li> {% endif %}
+                </ul>
+            <div class="jia"></div>
+            <!---我要认领---->
+            <div class="message_popup">
+                <h4>主办方认领<span class="glyphicon glyphicon-remove clearDiv"></span></h4>
+                <div>
+                    <form method="post">
+                        <ul>
+                            <li><label for="username"><span class="xing">&lowast;</span>认&nbsp;领&nbsp;人&nbsp;：</label><input type="text" name="name" id="username"/></li>
+                            <li><label for="tel"><span class="xing">&lowast;</span>手机号码：</label><div style="display: inline-table;">
+                                <input type="text" name="phone" id="tel"/><button href="#" class="captcha_btn">获取验证码</button>
+                                <br/><input data-captcha="" placeholder="填写您收到的手机验证码" type="text" id="captcha" name="captcha"/>
+                            </div>
+                            </li>
+                            <li><label for="email"><span class="xing">&lowast;</span>电子邮箱：</label><input name="email" type="text" id="email"/></li>
+                            <li><label style="position: relative;top: -6.6em;" for="email">&nbsp;&nbsp;&nbsp;我有话说：</label><textarea name="content"  id="content" cols="40" rows="5"></textarea></li>
+                        </ul>
+                        <button type="button" id="messageSubmit">我要认领</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 spon_content">
+            <p class="active">商务活动</p>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 hr"></div>
+            <div class="active-div">
+            {% for event in events %}
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 active_info">
+                <a href="{{event.event_url}}" target="_blank">
+                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12 active_img"
+                    style="background-image:url('{{event.event_img}}');" alt="{{event.event_name}}">
+                </div>
+                </a>
+                <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12 active_info_text">
+                    <div class="active_div">
+                        <a href="{{event.event_url}}" target="_blank">
+                            <p class="active_info_title"  {% if event.cat_name or event.event_venue.venue_title %}{% endif %}>{{event.event_name}}</p>
+                        </a>
+                    <p class="active_info_intro">简介：{{ event.content }}</p>
+                        <span class="foot_time">时间：{{ event.event_begin_time }}</span>
+                        <span class="foot_city">地点：{{ event.district_name}}</span><span class="join"><a href="{{event.event_url}}" target="_blank" rel="nofollow">我要报名>></a></span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 spon_foot">
+            <p class="active">往期活动回顾</p>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 hr"></div>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 spon_foot_info">
+                <ul>
+                    {% for event in old_events %}
+                    <li> <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 spon_foot_div">
+                        <a href="{{event.event_url}}" target="_blank">
+                        <p class="spon_foot_title">{{event.event_name}}</p></a>
+                        <span
+                            class="foot_time">时间：{{ event.event_begin_time }}</span><span
+                            class="foot_city">地点：{{ event.district_name}}</span>
+                    </div></li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+
+        </div>
+    </div>
+    {% else %}
+    <h1>指定主办方不存在。</h1>
+    {% endif %}
+</div>
+</div>
+{% endblock %}
+{% block myscript %}
+<script type="text/javascript" src="http://pic1.qkan.com/static/js/sponsor.js"></script>
+{% endblock %}

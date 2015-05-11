@@ -1,0 +1,27 @@
+.clr_captcha_target {
+	float: left;
+	margin-right: 10px;
+	}
+
+ul.clr_captcha_color_choices {
+	width: auto;
+	}
+
+	ul.clr_captcha_color_choices li {
+		display: inline-block;
+		margin-right: 3px;
+		position: relative;
+		}
+
+		input.clr_captcha_color + label {
+			border: solid #EEE 1px;
+			display: inline-block;
+			height: 18px;
+			left: 0;
+			position: absolute;
+			width: 18px;
+			}
+
+		input.clr_captcha_color:checked + label {
+			border-color: black;
+			}

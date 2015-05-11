@@ -1,0 +1,10 @@
+您已成功订阅{{ cats }}——{{ tags }}
+以下是活动家为您整理的相关活动推荐:
+{% for ev in ev_list %}
+{{ ev.url }}
+{{ ev.name }}
+时间：{{ ev.begin_time }} 至 {{ ev.end_time }}
+地点：{{ ev.address }}
+{% endfor %}
+【退订】{{ ev.unsubscribe }}
+微信扫一扫，活动君不仅为您准备了国内热门商务会议，还有更多城市周边特色活动体验。

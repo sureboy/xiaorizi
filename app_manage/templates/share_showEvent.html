@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{{event_name}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="renderer" content="webkit" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+<style type="text/css">
+  body {
+    font-family:  Tahoma, Arial, Helvetica, 'Microsoft Yahei', 微软雅黑, SimHei;
+    color:#2c3e50;
+    margin:0;
+  }
+  .container {
+    padding:0 8px;
+    margin-top:-10px;
+  }
+  .container>p {
+    line-height: 1.9em;
+    word-break: break-word;
+  }
+  .container img {
+    margin: 1em auto;
+    display: block;
+    max-width: 100%;
+    height: auto!important;
+  }
+    .app-div{
+        text-align: center;
+        margin-top: 2em;
+    }
+  .app-div a{
+      display: inline-block;
+      background-color: #fcc746;
+      width: 80%;
+      height: 2em;
+      text-align: center;
+      line-height: 2em;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 15px;
+  }
+  .big_div{
+      position: fixed;
+      width: 100%;
+      bottom: -5px;
+      left: 0;
+  }
+  .bottom_banner{
+      width: 100%;
+      position: relative;
+  }
+  .banner{
+      width: 100%;
+  }
+  .app-close{
+      width: 5%;
+      position: absolute;
+      top: -18%;
+      left: 1%;
+  }
+  .app_down{
+      width: 19%;
+      left: 80%;
+      position: absolute;
+      top: 18%;
+  }
+  table{
+      width: 100% !important;
+  }
+  .container >div,a,p, h1,h2, h3, h4,span,li  { FONT-SIZE: 0.875em!important; }
+</style>
+</head>
+<body class="dahuodong">
+<div style="display:none">
+
+</div>
+  <div class="container">
+      <div>
+          <img src="{{event_img}}" alt="{{event_name}}">
+          <p style="font-size:20px !important;font-weight: bold;">{{event_name}}</p>
+      </div>
+  	{% if note %}
+  	{% for n in note %}
+  	{% ifequal forloop.counter '1' %}
+  	<h4>{{n.0|safe}}</h4>
+  	{% endifequal %}
+  	{{n.1|safe}}
+  	{% endfor %}
+    {% endif %}
+
+  </div>
+
+<div class="big_div">
+      <div class="bottom_banner">
+          <img src="http://pic.huodongjia.com/static/images/app_close.png" class="app-close">
+          <a href="http://xiaorizi.me">
+          <img src="http://pic.huodongjia.com/static/images/app_banner.png" alt="" class="banner">
+              <img src="http://pic.huodongjia.com/static/images/app_down.png" class="app_down">
+          </a>
+      </div>
+</div>
+
+<script src="http://pic.huodongjia.com/static/js/jquery-1.8.3.min.js?t={{time}}.js"></script>
+<script type="text/javascript">
+    $(".app-close").click(function(){
+        $(".bottom_banner").css({
+            display:"none"
+        })
+    });
+    str=$(".container").html();
+    $(".container").html(str.replace(/\u200b/ig,"")); 
+</script>
+</body>
+</html>

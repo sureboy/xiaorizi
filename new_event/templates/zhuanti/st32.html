@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+{% block myStyle %}
+<link rel="stylesheet" href="http://pic.huodongjia.com/static/css/show_event3.css?t={{time}}.css">
+{% endblock %}
+{% block myContainer %}myContainer{% endblock%}
+{% block search%}
+{% include "searchComponent.html" %}
+{% endblock %}
+{% block content%}
+<!-- 顶部活动主题图片以及活动时间地点名字 -->
+    {%if event.event_img_h330%}
+    <div class="header_top" style="height: 100%;">
+        <img src="{{event.event_img_h330}}" alt="{{event.event_name}}" />
+    </div>
+    {%else%}
+    <div class="header_top">
+        <img src="http://pic.huodongjia.com/static/images/zhuanti6.jpg" alt="{{event.event_name}}"/>
+        <div class="head_position">
+            <div class="head_body">
+                <h1 class="activityName">{{event.event_name}}</h1>
+                <p class="h_time">时间：{{event.event_begin_time}}{% ifnotequal event.event_begin_time event.event_end_time%}&nbsp;至&nbsp;{{event.event_end_time}}{%endifnotequal%}</p>
+                <p class="city">地点：<a href="/{{event.district_title}}/">{{event.district_name}}</a>{% if event.event_venue %},{{event.event_venue}}{%else%}{% if event.event_venue %},{{event.event_address}}{% endif %}{% endif %}</p>
+            </div>
+        </div>
+    </div>
+    {%endif%}
+<!-- 滑动导航栏跟随屏幕移动 -->
+<div class="fixednav">
+    <nav id="navbar-example" class="navbar navbar-default navbar-static" role="navigation">
+        <div class="navbar-collapse container nav_body">
+            <ul class="nav navbar-nav" id="head_nav" role="navigation">
+                <li class="a_notice"><a><img src="http://pic.huodongjia.com/static/images/intro.png" height="58" width="58" alt="会议介绍"><br/>会议介绍</a></li><li
+                    class="a_schedule"><a><img src="http://pic.huodongjia.com/static/images/agenda.png" height="58" width="58" alt="会议日程"><br/>会议日程</a></li><li
+                    class="a_guest"><a><img src="http://pic.huodongjia.com/static/images/guest.png" height="58" width="58" alt="会议嘉宾"><br/>会议嘉宾</a></li><li
+                    class="a_ticket"><a><img src="http://pic.huodongjia.com/static/images/ticket.png" height="58" width="58" alt="会议门票"><br/>会议门票</a></li>
+                </ul>
+        </div>
+    </nav>
+</div>
+<!-- 面包屑导航栏 -->
+    <div class="container width980 head_nav">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                {% if navigationList %}
+                {% include "navigationList.html" %}
+                {% endif %}
+            {% ifequal event.time_expire 2 %}
+            <ul class="ul_right">
+                <li><i class="ul_right_li_1"></i>独家代理</li>
+                <li><i class="ul_right_li_2"></i>轻松参会</li>
+                <li><i class="ul_right_li_3"></i>专业服务</li>
+            </ul>
+            {%else%}
+            {% if event.price_return_flag %}
+            <ul class="ul_right">
+                <li><i class="ul_right_li_1"></i>独家代理</li>
+                <li><i class="ul_right_li_2_fan"></i>返现优惠</li>
+                <li><i class="ul_right_li_3"></i>专业服务</li>
+            </ul>
+            {%else%}
+            <ul class="ul_right">
+                <li><i class="ul_right_li_1"></i>独家代理</li>
+                <li><i class="ul_right_li_2"></i>轻松参会</li>
+                <li><i class="ul_right_li_3"></i>专业服务</li>
+            </ul>
+            {% endif %}
+            {% endifequal %}
+        </div>
+</div>
+
+
+{% ifequal event.time_expire 2 %}
+<div class="col-lg-1 col-md-1 col-xs-1 col-sm-1 enroll">
+    <a class="message">
+        <img src="http://pic.huodongjia.com/static/images/Message.png">
+    </a>
+</div>
+{%else%}
+{% ifequal event.event_price_model 1 %}
+<div class="col-lg-1 col-md-1 col-xs-1 col-sm-1 enroll">
+    <a href="/showorder/{{event.event_id}}">
+        <img src="http://pic.huodongjia.com/static/images/letgo.png">
+    </a>
+</div>
+{% if event.price_return_flag %}
+<div class="fanli">
+    <a href="/showorder/{{event.event_id}}" rel="nofollow">
+        <img src="http://pic.huodongjia.com/static/images/fanli.png">
+    </a>
+</div>
+{% endif %}
+{% else %}
+{% ifequal event.event_price_model 6 %}
+<div class="col-lg-1 col-md-1 col-xs-1 col-sm-1 enroll">
+    <a href="/showorder/{{event.event_id}}" rel="nofollow">
+        <img src="http://pic.huodongjia.com/static/images/letgo.png">
+    </a>
+</div>
+{% if event.price_return_flag %}
+<div class="fanli">
+    <a href="/showorder/{{event.event_id}}" rel="nofollow">
+        <img src="http://pic.huodongjia.com/static/images/fanli.png">
+    </a>
+</div>
+{% endif %}
+{% else %}
+{% ifequal event.event_price_model 4 %}
+<div class="col-lg-1 col-md-1 col-xs-1 col-sm-1 enroll">
+    <a href="#menpiao">
+        <img src="http://pic.huodongjia.com/static/images/Free.png">
+    </a>
+</div>
+{% else %}
+<div class="col-lg-1 col-md-1 col-xs-1 col-sm-1 enroll">
+    <a class="message">
+        <img src="http://pic.huodongjia.com/static/images/Message.png">
+    </a>
+</div>
+{% endifequal %}
+{% endifequal %}
+{% endifequal %}
+{% endifequal %}
+<!-- 活动介绍等内容 -->
+<div class="event_info">
+    <div class="body_class" id="{{forloop.counter}}">
+        <!-- 活动内容标题 -->
+        <!-- 活动内容标题 -->
+        <div class="container width980">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content" >
+                {% for item in event.event_content %}
+                {% ifequal item.0 '会议通知' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '相关介绍' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '活动介绍' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '演出信息' %}
+                {{item.1|safe}}
+                {% endifequal %}
+                {% endifequal %}
+                {% endifequal %}
+                {% endifequal %}
+                {% endfor %}
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+     <div class="body_class" id="{{forloop.counter}}">
+        <!-- 活动内容标题 -->
+        <div class="class_head">
+        <div class="classs_name">
+                        <h2>会议日程</h2>
+        </div>
+              <div class="head_middle"></div>
+        </div>
+        <div class="container width980">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content" style="text-align:left;">
+                {% for item in event.event_content %}
+                {% ifequal item.0 '行程安排' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '会议日程' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '会议议程' %}
+                {{item.1|safe}}
+                {% endifequal %}
+                {% endifequal %}
+                {% endifequal %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+     <div class="body_class" id="{{forloop.counter}}">
+        <!-- 活动内容标题 -->
+        <div class="class_head">
+        <div class="classs_name">
+                        <h2>会议嘉宾</h2>
+        </div>
+              <div class="head_middle"></div>
+        </div>
+        <div class="container width980">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">
+                {% for item in event.event_content %}
+                {% ifequal item.0 '会议嘉宾' %}
+                {{item.1|safe}}
+                {% endifequal %}
+                {% endfor %}
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+     <div class="body_class" id="menpiao">
+        <!-- 活动内容标题 -->
+        <div class="class_head">
+        <div class="classs_name">
+                        <h2>会议门票</h2>
+        </div>
+              <div class="head_middle"></div>
+        </div>
+        <div class="container width980">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 class_content">
+                {% for item in event.event_content %}
+                {% ifequal item.0 '会议门票' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '购买须知' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '预定须知' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '订票须知' %}
+                {{item.1|safe}}
+                {%else%}{% ifequal item.0 '费用' %}
+                {{item.1|safe}}
+                {% endifequal %}
+                {% endifequal %}
+                {% endifequal %}
+                {% endifequal %}
+                {% endifequal %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="container">
+        <div  class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 tag">
+
+                <ul class="meeting-active">
+                    <span> 热门标签:</span>
+                    {% for tag in event.event_tag %}
+                    <li><a href="/tag/?keyword={{tag}}" style="color: #5F5F5F">{{tag}}</a></li>
+                    {% if not forloop.last%}{% endif %}{% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+<div class="zt_footer container">
+    <h4>
+        相关会议
+    </h4>
+    {% for event in user_viewed_events|slice:"4" %}
+    <a class="tuijian_4" href="/event-{{event.event_id}}.html">
+        <div class="col-sm-3 col-md-3 col-lg-3 col-xs-3 recommend">
+            <div style="position: relative;">
+            <img src="{{event.event_img}}" style="width: 100%" alt="{{event.event_name}}"/>
+            <div class="recommend_body" style="width: 100%;padding: 0px 10px">
+                <table>
+                    <tr>
+                        <td><p>{{event.event_name}}</p></td>
+                    </tr>
+                </table>
+            </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+</div>
+<div class="message_popup">
+    <h4>留言咨询: <span class="glyphicon glyphicon-remove clearDiv"></span></h4>
+    <div>
+        <form method="post">
+            <p>请仔细填写以下内容，我们会及时与您联系，谢谢！</p>
+            <ul>
+                <li><label for="username"><span class="xing">&lowast;</span>你的姓名：</label><input type="text" name="name" id="username"/></li>
+                <li><label for="tel"><span class="xing">&lowast;</span>手机号码：</label><div style="display: inline-table;">
+                    <input type="text" name="phone" id="tel"/><button href="#" class="captcha_btn">获取验证码</button>
+                    <br/><input data-captcha="" placeholder="填写您收到的手机验证码" type="text" id="captcha" name="captcha"/>
+                </div>
+                </li>
+                <li><label for="email"><span class="xing">&lowast;</span>电子邮箱：</label><input name="email" type="text" id="email"/></li>
+                <li><label style="position: relative;top: -6.6em;" for="email"><span class="xing">&lowast;</span>咨询内容：</label><textarea name="content"  id="content" cols="40" rows="5"></textarea></li>
+            </ul>
+            <input name="event_id" value="{{event.event_id}}" type="hidden" class="event_id"/>
+            <input name="event_name" value="{{event.event_name}}" type="hidden" class="event_name"/>
+            <button type="button" id="messageSubmit">确定</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block myscript %}
+<script src="http://pic.huodongjia.com/static/js/show_event3.js?t={{time}}.css"></script>
+{% endblock %}

@@ -1,0 +1,24 @@
+.to {
+	padding-right: 1em;
+}
+
+#categoryList dl {
+	font-size: 18px;
+}
+
+#categoryList dt {
+	font-size:14px;
+	color:#ccc;
+}
+
+.paginationWrapper {
+	margin:10px auto;
+	padding-top:1px;
+	text-align: center;
+}
+
+
+/*----------------------*/
+.week {
+	padding-left:.5em;
+}

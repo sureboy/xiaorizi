@@ -1,0 +1,17 @@
+{% load i18n %}
+<footer class="fixedFooter">
+    <div class="row">
+      <div class="col-sm-12">
+        <ul class="list-inline text-right" id="actionList">
+        <li><a type="btn" data-action-type="保存并发布" class="btn btn-success savePublish saveEvent" data-form-name='_continue'>保存并发布</a></li>
+        <li><a type="btn" data-action-type="保存并发布" class="btn btn-success saveTuijian saveEvent" data-form-name='_continue'>发布并推荐</a></li>
+        <li><a type="btn" data-action-type="保存待完善" class="btn btn-success saveContinue saveEvent" data-form-name='_continue'>保存待完善</a></li>
+        <li><a type="btn" data-action-type="保存后备库" class="btn btn-success saveReserve saveEvent" data-form-name='_continue'>保存后备库</a></li>
+        <li><a type="btn" class="btn btn-info saveEvent" data-action-type='保存并增加另一个' data-form-name='_addanother'>保存并新增</a></li>
+        <li><a type="btn" class="btn btn-info saveEvent" data-action-type='保存并继续编辑' data-form-name='_continue'>保存继续编辑</a></li>
+        <li><a type="btn" class="btn btn-info" target="_blank"  href="http://www.huodongjia.com/event-{{event.old_event_id}}.html">游览页面</a></li>
+        <li><a type="btn" data-action-type="废弃"  class="btn btn-danger saveDiscard saveEvent">废弃</a></li>
+        </ul>
+      </div>
+    </div>
+</footer>

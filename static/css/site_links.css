@@ -1,0 +1,42 @@
+.mainWrapper{
+    background-color: #fff;
+    font-family: "microsoft yahei";
+}
+.site{
+    line-height: 30px;
+}
+.site_header{
+    margin-top: 2em;
+    height: 165px;
+}
+.site_header p{
+    color:#5d5d5d;
+}
+.site_title{
+    font-size: 1.2em;
+}
+.site_content{
+    height: auto;
+    margin-top: 5em;
+}
+.link{
+    font-size: 1.2em;
+    color:#428bca;
+    font-weight: bold;
+}
+.hr{
+    height: 1px;
+    background-color: #eee;
+}
+.list-inline{
+    margin-top: 2em;
+    height: auto;
+}
+.list-inline li{
+    display: inline-block;
+    color:#5d5d5d;
+    margin-left: 0.5em  ;
+}
+.list-inline li a{
+    color:#5d5d5d;
+}

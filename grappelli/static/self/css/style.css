@@ -1,0 +1,118 @@
+fieldset.grp-module .grp-row{
+border:none;
+}
+
+fieldset.grp-module .begin_time,fieldset.grp-module .end_time{
+width: 200px;
+clear: none;
+}
+fieldset.grp-module .begin_time .l-d-4 .c-1,fieldset.grp-module .end_time .l-d-4 .c-1
+{
+width: 50px;
+min-width:30px;
+} 
+
+
+
+
+
+
+fieldset.grp-module  .Price .l-d-4 .c-2 div{
+padding-bottom:20px;
+}
+
+ 
+fieldset.grp-module  .Price
+{
+width: 580px;
+}
+fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_Currency,fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_Type{
+width: 200px;
+float:left;
+}
+
+fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_pr{
+width: 400px;
+float:left;
+
+
+}
+fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_pr p
+{
+padding-bottom:15px;
+}
+fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_pr #pr_str,fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_pr #zpr_str,fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_pr #ppr_str
+{
+width: 270px;
+}
+
+fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_pr #max_pr,fieldset.grp-module  .Price .l-d-4 .c-2 #d_id_pr #min_pr
+{
+width: 243px;
+}
+fieldset.grp-module  .img{
+	width: 600px;
+	clear: none;
+}
+fieldset.grp-module .img .l-d-4 .c-1{
+	width: 40px;
+	min-width:50px;
+} 
+
+fieldset.grp-module .cat{
+	width: 400px;
+	clear: none; 
+}
+fieldset.grp-module .tag{
+	width: 600px;
+	clear: none; 
+}
+fieldset.grp-module .tag .l-d-4 .c-1{
+	width: 300px;
+	min-width:250px;
+}
+fieldset.grp-module .tag  label a{
+	display: block;
+	padding:5px;
+	float:left;
+}
+fieldset.grp-module .tag  label p{
+	float:left;
+	width:100%;
+	font-size:1.2em
+}
+fieldset.grp-module .tag  label {
+	font-size:1em;
+	width: 100%; 
+}
+
+
+fieldset.grp-module .fname{
+	width: 600px;
+	clear: none; 
+}
+fieldset.grp-module .fname #id_fname{
+	width: 400px;
+}
+fieldset.grp-module .ename{
+	width: 350px;
+	clear: none; 
+}
+fieldset.grp-module .ename #id_ename{
+	width: 237px;
+}
+fieldset.grp-module .ename .l-d-4 .c-1{
+		width: 60px;
+	min-width:50px;
+}
+fieldset.grp-module .addr .l-d-4 .c-1 .f p label{
+	color:orange;
+	font-size:1em;
+	 
+}
+
+fieldset.grp-module .addr .l-d-4 .c-1 span p label{
+	color:green;
+	font-size:1em;
+	 
+}

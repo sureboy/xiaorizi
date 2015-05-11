@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type='text/css' href='http://pic1.qkan.com/static/css/sponsor.css'>
+</head>
+<div class="container">
+    {% if venue %}
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 spon_header">
+            <ul class="col-lg-12 col-md-12 col-xs-12 col-sm-12 ul_left">
+                <li ><a href="/" >首页</a>&gt;</li>
+                <li><a>场馆</a>&gt;</li>
+                <li><h1>{{ venue.title }}</h1></li>
+            </ul>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12  spon_info">
+                    <img src="{{ venue.pic_url }}"   class="spon_info_img">
+                    {% autoescape off %}
+                    {{ venue.content }}
+                    {% endautoescape %}
+
+                </br><p><b>地址:</b>{{ venue.address }}</p>
+            </div>
+            </div>
+
+        </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 spon_content">
+            <p class="active">商务活动</p>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 hr"></div>
+            <div class="active-div">
+            {% for event in events %}
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 active_info">
+                <a href="{{event.event_url}}" target="_blank">
+
+                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12 active_img"
+                    style="background-image:url('{{event.event_img}}');">
+                </div>
+                    <a href="{{event.event_url}}" target="_blank">
+                <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12 active_info_text">
+                    <div class="active_div">
+                        <a href="{{event.event_url}}" target="_blank">
+                            <p class="active_info_title"  {% if event.cat_name or event.event_venue.venue_title %}{% endif %}>{{event.event_name}}</p>
+                        </a>
+                    <p class="active_info_intro">简介：{{ event.content }}</p>
+                        <span class="foot_time">时间：{{ event.event_begin_time }}</span>
+                        <span class="foot_city">地点：{{ event.district_name}}</span><span class="join"><a href="{{event.event_url}}" target="_blank">我要报名>></a></span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 spon_foot">
+            <p class="active">往期活动回顾</p>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 hr"></div>
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 spon_foot_info">
+                <ul>
+                    {% for event in old_events %}
+                    <li> <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 spon_foot_div">
+                        <a href="{{event.event_url}}" target="_blank">
+                        <p class="spon_foot_title">{{event.event_name}}</p></a>
+                        <span
+                            class="foot_time">时间：{{ event.event_begin_time }}</span><span
+                            class="foot_city">地点：{{ event.district_name}}</span>
+                    </div></li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+
+        </div>
+    </div>
+    {% else %}
+    <h1>指定场馆不存在。</h1>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block myscript %}
+<script type="text/javascript" src="http://pic1.qkan.com/static/js/sponsor.js"></script>
+<script type="text/javascript">
+    $(".footer").css({
+        position: "absolute"
+    })
+    $(".mainWrapper").css({
+        paddingBottom: "22em"
+    })
+</script>
+{% endblock %}

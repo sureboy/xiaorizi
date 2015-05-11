@@ -1,0 +1,10 @@
+{% extends "st2.html" %}
+{% block mainimg %}
+    <div class="head_img"  style="background-image:url('http://pic.huodongjia.com/static/images/zhuanti8.png');background-size:100% 500px;">
+        <div class="head_body">
+            <h1 class="activityName"><span>{{event.event_name}}</span></h1>
+            <p class="h_time"><span>时间：{{event.event_begin_time}}{% ifnotequal event.event_begin_time event.event_end_time%}&nbsp;至&nbsp;{{event.event_end_time}}{%endifnotequal%}</span></p>
+            <p class="city"><span>地点: {{event.district_name}}</span></p>
+          </div>
+    </div>
+{% endblock %}    
